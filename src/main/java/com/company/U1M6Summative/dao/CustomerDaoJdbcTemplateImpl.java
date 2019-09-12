@@ -1,10 +1,12 @@
 package com.company.U1M6Summative.dao;
 
 import com.company.U1M6Summative.dto.Customer;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 public class CustomerDaoJdbcTemplateImpl implements CustomerDao{
+
     @Override
     public Customer addCustomer(Customer customer) {
         return null;
