@@ -41,7 +41,7 @@ public class InvoiceItemController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteItem(@PathVariable("invoice_id") int invoiceItemIdId){
+    public void deleteItem(@PathVariable("invoice_id") int invoiceItemId){
         serviceLayer.removeInvoiceItem(invoiceItemId);
     }
 

@@ -1,7 +1,10 @@
 package com.company.U1M6Summative.service;
 
 import com.company.U1M6Summative.dao.*;
+import com.company.U1M6Summative.dto.Customer;
 import com.company.U1M6Summative.dto.Invoice;
+import com.company.U1M6Summative.dto.InvoiceItem;
+import com.company.U1M6Summative.dto.Item;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -18,6 +21,10 @@ public class ServiceLayerTest {
     private ItemDao itemDao;
     private InvoiceItemDao invoiceItemDao;
     private ServiceLayer serviceLayer;
+
+    //=========================================================================
+    //Mock Setups
+    //=========================================================================
 
     private void setupInvoiceDaoMock(){
         invoiceDao = mock(InvoiceDaoJdbcTemplateImpl.class);
@@ -45,6 +52,79 @@ public class ServiceLayerTest {
         doReturn(invoiceList).when(invoiceDao).getInvoiceByCustomer(1);
     }
 
+    private void setupCustomerDaoMock(){
+        customerDao = mock(CustomerDaoJdbcTemplateImpl.class);
+        Customer customer = new Customer();
+        customer.setId(1);
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+
+        Customer customer1 = new Customer();
+        customer1.setFirstName("John");
+        customer1.setLastName("Doe");
+        customer1.setEmail("johndoe@gmail.com");
+        customer1.setCompany("Cognizant");
+        customer1.setPhone("1112221234");
+
+        List<Customer> customerList = new ArrayList<>();
+        customerList.add(customer);
+
+        doReturn(customer).when(customerDao).addCustomer(customer1);
+        doReturn(customer).when(customerDao).getCustomer(1);
+        doReturn(customerList).when(customerDao).getAllCustomers();
+    }
+
+    private void setupItemDaoMock(){
+        itemDao = mock(ItemDaoJdbcTemplateImpl.class);
+        Item item = new Item();
+        item.setId(1);
+        item.setName("Hot Air Balloon");
+        item.setDailyRate(new BigDecimal("200.00"));
+        item.setDescription("Blue");
+
+        Item item1 = new Item();
+        item1.setName("Hot Air Balloon");
+        item1.setDailyRate(new BigDecimal("200.00"));
+        item1.setDescription("Blue");
+
+        List<Item> itemList = new ArrayList<>();
+        itemList.add(item);
+
+        doReturn(item).when(itemDao).addItem(item1);
+        doReturn(item).when(itemDao).getItem(1);
+        doReturn(itemList).when(itemDao).getAllItems();
+    }
+
+    private void setupInvoiceItemDaoMock(){
+        invoiceDao = mock(InvoiceDaoJdbcTemplateImpl.class);
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setId(1);
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        InvoiceItem invoiceItem1 = new InvoiceItem();
+        invoiceItem1.setInvoiceId(1);
+        invoiceItem1.setQuantity(2);
+        invoiceItem1.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem1.setDiscount(new BigDecimal("20.00"));
+
+        List<InvoiceItem> invoiceItemList = new ArrayList<>();
+        invoiceItemList.add(invoiceItem);
+
+        doReturn(invoiceItem).when(invoiceItemDao).addInvoiceItem(invoiceItem1);
+        doReturn(invoiceItem).when(invoiceItemDao).getInvoiceItem(1);
+        doReturn(invoiceItemList).when(invoiceItemDao).getAllInvoiceItems();
+    }
+
+    //=========================================================================
+    //Invoice Service Layer
+    //=========================================================================
+
     @Test
     public void saveInvoice() {
     }
@@ -69,6 +149,10 @@ public class ServiceLayerTest {
     public void removeInvoice() {
     }
 
+    //=========================================================================
+    //Customer Service Layer
+    //=========================================================================
+
     @Test
     public void saveCustomer() {
     }
@@ -89,6 +173,10 @@ public class ServiceLayerTest {
     public void deleteCustomer() {
     }
 
+    //=========================================================================
+    //InvoiceItem Service Layer
+    //=========================================================================
+
     @Test
     public void saveInvoiceItem() {
     }
@@ -106,8 +194,13 @@ public class ServiceLayerTest {
     }
 
     @Test
-    public void deleteInvoiceItem() {
+    public void removeInvoiceItem() {
     }
+
+    //=========================================================================
+    //Item Service Layer
+    //=========================================================================
+
 
     @Test
     public void saveItem() {

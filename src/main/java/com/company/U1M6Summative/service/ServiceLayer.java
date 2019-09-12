@@ -79,11 +79,11 @@ public class ServiceLayer {
         return null;
     }
 
-    void udpateCustomer(Customer customer){
+    public void updateCustomer(Customer customer){
 
     }
 
-    void deleteCustomer(int id){
+    public void removeCustomer(int id){
 
     }
 
@@ -102,10 +102,12 @@ public class ServiceLayer {
     public List<InvoiceItem> findAllInvoiceItems(){
         return null;
     }
-    void updateInvoiceItem(InvoiceItem invoiceItem){
+
+    public void updateInvoiceItem(InvoiceItem invoiceItem){
 
     }
-    void deleteInvoiceItem(int id){
+
+    public void removeInvoiceItem(int id){
 
     }
 
@@ -125,11 +127,11 @@ public class ServiceLayer {
         return null;
     }
 
-    void updateItem(Item item){
+    public void updateItem(Item item){
 
     }
 
-    void deleteItem(int id){
+    public void removeItem(int id){
 
     }
 }
