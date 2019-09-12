@@ -3,7 +3,7 @@ info:
   title: Rental Store
   description: A jdbc project that models a rental store with customers, items, and invoices
   version: 0.0.1
-servers:
+servers: 
   - url: 'http://localhost:8080'
     description: Local dev server
 paths:
@@ -28,6 +28,14 @@ paths:
                 $ref: '#/components/schemas/Customer'
     put:
       summary: update a customer object
+      requestBody:
+        description: customer object we are creating
+        required: true
+        content:
+          application/json:
+            schema:
+              #referencing the customer object definition found at the bottom of the file
+              $ref: '#/components/schemas/Customer'
       responses:
         '200':
           description: a success message
@@ -35,7 +43,7 @@ paths:
     get:
       summary: responds with customer object
       description: etrieve customer object matching customer_id
-      parameters:
+      parameters: 
         - name: customer_id
           in: path
           required: true
@@ -77,7 +85,7 @@ paths:
         content:
           application/json:
             schema:
-              #referencing the customer object definition found at the bottom of the file
+                #referencing the customer object definition found at the bottom of the file
               $ref: '#/components/schemas/Item'
       responses:
         '200':
@@ -105,7 +113,7 @@ paths:
     get:
       summary: responds with item object
       description: retrieve the item object matching item_id
-      parameters:
+      parameters: 
         - name: item_id
           in: path
           required: true
@@ -194,6 +202,42 @@ paths:
               schema:
                 #referencing the invoice object definition found at the bottom of the file
                 $ref: '#/components/schemas/Invoice'
+  /invoiceitem:
+    post:
+      summary: create an invoice item
+      description: creates a new invoice item object using the request body
+      requestBody:
+        description: the item object we are updating
+        required: true
+        content:
+          application/json:
+            schema:
+              #referencing the invoice object definiion found at the bottom of the file
+              $ref: '#/components/schemas/InvoiceItem'
+      responses:
+        '200':
+          description: invoice item object
+          content:
+            application/json:
+              schema:
+                #referencing the invoice object definition found at the bottom of the file
+                $ref: '#/components/schemas/InvoiceItem'
+  /invoiceitem/{invoice_item_id}:
+    delete:
+      summary: deletes an invoice
+      description: deletes an invoice object matching the given invoice_item_id
+      parameters:
+        - name: invoice_item_id
+          in: path
+          required: true
+          description: the id of the invoice item object you would like to delete
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: invoice item object successfully deleted
 components:
   schemas:
     Customer:
@@ -208,7 +252,7 @@ components:
           type: string
         phone:
           type: string
-      required:
+      required: 
         - first_name
         - last_name
         - email
@@ -222,7 +266,7 @@ components:
           type: string
         daily_rate:
           type: string
-      required:
+      required: 
         - name
         - description
         - daily_rate
@@ -238,9 +282,28 @@ components:
           type: string
         late_fee:
           type: number
-      required:
+      required: 
         - customer_id
         - order_date
         - pickup_date
         - return_date
         - late_fee
+    InvoiceItem:
+      properties:
+        invoice_id:
+          type: integer
+        item_id:
+          type: integer
+        quantity:
+          type: integer
+        unit_rate:
+          type: number
+        discount:
+          type: number
+      required:
+        - invoice_id
+        - item_id
+        - quantity
+        - unit_rate
+        - discount
+          
