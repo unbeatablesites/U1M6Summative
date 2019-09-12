@@ -1,6 +1,5 @@
 package com.company.U1M6Summative.dto;
 
-import jdk.vm.ci.meta.Local;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -12,7 +11,7 @@ public class Invoice {
     private LocalDate orderDate;
     private LocalDate pickUpDate;
     private LocalDate returnDate;
-    private BigDecimal returnFee;
+    private BigDecimal lateFee;
 
     public int getId() {
         return id;
@@ -54,12 +53,12 @@ public class Invoice {
         this.returnDate = returnDate;
     }
 
-    public BigDecimal getReturnFee() {
-        return returnFee;
+    public BigDecimal getLateFee() {
+        return lateFee;
     }
 
-    public void setReturnFee(BigDecimal returnFee) {
-        this.returnFee = returnFee;
+    public void setLateFee(BigDecimal lateFee) {
+        this.lateFee = lateFee;
     }
 
     @Override
@@ -72,11 +71,11 @@ public class Invoice {
                 getOrderDate().equals(invoice.getOrderDate()) &&
                 getPickUpDate().equals(invoice.getPickUpDate()) &&
                 getReturnDate().equals(invoice.getReturnDate()) &&
-                getReturnFee().equals(invoice.getReturnFee());
+                getLateFee().equals(invoice.getLateFee());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getCustomerId(), getOrderDate(), getPickUpDate(), getReturnDate(), getReturnFee());
+        return Objects.hash(getId(), getCustomerId(), getOrderDate(), getPickUpDate(), getReturnDate(), getLateFee());
     }
 }
