@@ -16,13 +16,13 @@ public class InvoiceViewModelController {
     @Autowired
     ServiceLayer serviceLayer;
 
-    @RequestMapping
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public InvoiceViewModel createInvoice(@RequestBody InvoiceViewModel invoiceViewModel){
         return serviceLayer.saveInvoice(invoiceViewModel);
     }
 
-    @RequestMapping("/{customerId}")
+    @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<InvoiceViewModel> getInvoice(@PathVariable("customerId") int customerId){
         return serviceLayer.findInvoiceByCustomer(customerId);
