@@ -1,16 +1,25 @@
 package com.company.U1M6Summative.dto;
 
 
+import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
 public class Invoice {
+
     private int id;
+    @NotNull
     private int customerId;
+    @PastOrPresent
     private LocalDate orderDate;
+    @FutureOrPresent
     private LocalDate pickUpDate;
+    @FutureOrPresent
     private LocalDate returnDate;
+    @NotNull
     private BigDecimal lateFee;
 
     public int getId() {
