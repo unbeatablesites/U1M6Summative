@@ -1,12 +1,23 @@
 package com.company.U1M6Summative.dto;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Item {
     private int id;
+
+    @NotEmpty(message = "Name can't be empty")
+    @Size(max = 50, message = "Can't be more than 50 characters long")
     private String name;
+
+    @Size(max = 255, message = "Can't be more than 255 characters long")
     private String description;
+    @NotNull(message = "Daily rate can't be null")
+    @Digits(integer = 2, fraction = 2)
     private BigDecimal dailyRate;
 
     public int getId() {

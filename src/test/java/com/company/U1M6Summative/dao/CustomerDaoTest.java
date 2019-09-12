@@ -23,6 +23,7 @@
 //    }
 package com.company.U1M6Summative.dao;
 
+
 import com.company.U1M6Summative.dto.Customer;
 //import com.company.U1M6Summative.dao*;
 import org.junit.After;
@@ -93,7 +94,7 @@ public class CustomerDaoTest {
         customer3.setPhone("444-555-3233");
         customer3.setCompany("Hawaii");
 
-        Customer customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
+        customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
 
         assertEquals(customer, customer2); //test that the created customer and the retrieved customer object are the same.
 
@@ -152,7 +153,7 @@ public class CustomerDaoTest {
         customer.setEmail("ohh@kay.com");
         customer.setPhone("999-333-4444");
         customer.setCompany("Mars");
-        customer= customerDao.addCustomer(customer);
+        customer = customerDao.addCustomer(customer);
 
         customer.setFirstName("UPDATED");
         customer.setLastName("UPDATED");
@@ -163,8 +164,8 @@ public class CustomerDaoTest {
         Customer customer2 = customerDao.getCustomer(customer.getId());
 
         assertEquals(customer2, customer);
-
     }
+
 
     @Test
     public void deleteCustomer() {
@@ -203,5 +204,4 @@ public class CustomerDaoTest {
 
 
     }
-
 }

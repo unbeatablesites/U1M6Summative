@@ -1,14 +1,23 @@
 package com.company.U1M6Summative.dto;
 
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class InvoiceItem {
     private int id;
+    @NotNull(message = "Invoice id can't be null")
     private int invoiceId;
+    @NotNull(message = "Item Id can't be null")
     private int itemId;
+    @NotNull(message = "Quantity can't be null")
     private int quantity;
+    @NotNull(message = "Unit rate can't be null")
+    @Digits(integer = 2, fraction = 2, message = "Incorrect unit rate")
     private BigDecimal unitRate;
+    @NotNull(message = "Discount cannot be null")
+    @Digits(integer = 2, fraction = 2, message = "Invalid discount")
     private BigDecimal discount;
 
     public int getId() {
