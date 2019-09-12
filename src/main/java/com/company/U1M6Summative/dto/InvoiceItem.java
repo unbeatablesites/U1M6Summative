@@ -1,14 +1,21 @@
 package com.company.U1M6Summative.dto;
 
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class InvoiceItem {
+    @NotNull
     private int id;
+    @NotNull
     private int invoiceId;
+    @NotNull
     private int itemId;
+    @NotNull
     private int quantity;
+    @NotNull
     private BigDecimal unitRate;
+    @NotNull
     private BigDecimal discount;
 
     public int getId() {

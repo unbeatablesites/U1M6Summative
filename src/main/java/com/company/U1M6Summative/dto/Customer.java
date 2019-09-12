@@ -2,6 +2,7 @@ package com.company.U1M6Summative.dto;
 
 import java.util.Objects;
 
+
 public class Customer {
     private int id;
     private String firstName;
