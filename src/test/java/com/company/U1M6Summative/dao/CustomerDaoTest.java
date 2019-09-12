@@ -1,27 +1,6 @@
 package com.company.U1M6Summative.dao;
 
-import org.junit.Test;
-
-import static org.junit.Assert.*;
-
-public class CustomerDaoTest {
-
-    @Test
-    public void addCustomer() {
-    }
-
-    @Test
-    public void getCustomer() {
-    }
-
-    @Test
-    public void getAllCustomers() {
-    }
-
-    @Test
-    public void udpateCustomer() {
-    }package com.company.U1M6Summative.dao;
-
+import com.company.U1M6Summative.dao.CustomerDao;
 import com.company.U1M6Summative.dto.Customer;
 //import com.company.U1M6Summative.dao*;
 import org.junit.After;
@@ -63,7 +42,7 @@ public class CustomerDaoTest {
     }
 
     @Test
-    public void udpateCustomer() {
+    public void updateCustomer() {
     }
 
     @Test
@@ -92,9 +71,5 @@ public class CustomerDaoTest {
 
 
 
-    }
-}
-    @Test
-    public void deleteCustomer() {
     }
 }
