@@ -18,13 +18,13 @@ public class CustomerController {
     @Autowired
     ServiceLayer serviceLayer;
 
-    @PostMapping
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public CustomerViewModel createCustomer(@RequestBody @Valid CustomerViewModel viewModel) {
         return serviceLayer.saveCustomer(viewModel);
     }
 
-    @GetMapping
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<CustomerViewModel> getAllCustomers() {
         List<CustomerViewModel> customerList = serviceLayer.findAllCustomers();
@@ -32,20 +32,20 @@ public class CustomerController {
         return customerList;
     }
 
-    @GetMapping("/{customerId}")
+    @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public CustomerViewModel getCustomerById(@PathVariable("customerId") int customerId) {
         return serviceLayer.findCustomer(customerId);
     }
 
-    @PutMapping("{customerId}")
+    @RequestMapping(value = "{customerId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public CustomerViewModel updateCustomer(@PathVariable("customerId") int customerId, @RequestBody CustomerViewModel viewModel) {
         viewModel.setCustomerId(customerId);
         return serviceLayer.updateCustomer(viewModel);
     }
 
-    @DeleteMapping("/{customerId}")
+    @RequestMapping(value = "/{customerId}" , method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void deleteCustomer(@PathVariable("customerId") int customerId) {
         serviceLayer.removeCustomer(customerId);

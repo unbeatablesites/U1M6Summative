@@ -9,19 +9,19 @@ public class Customer {
 
     private int id;
     @NotEmpty
-    @Size(max = 50)
+    @Size(max = 50, message = "Can't be more than 50 characters long")
     private String firstName;
     @NotEmpty
-    @Size(max = 50)
+    @Size(max = 50, message = "Can't be more than 50 characters long")
     private String lastName;
     @NotEmpty
-    @Size(max = 75)
+    @Size(max = 75, message = "Can't be more than 75 characters long")
     private String email;
     @NotEmpty
-    @Size(max = 50)
+    @Size(max = 50, message = "Can't be more than 50 characters long")
     private String company;
     @NotEmpty
-    @Size(max = 50)
+    @Size(max = 50, message = "Can't be more than 50 characters long")
     private String phone;
 
     public int getId() {

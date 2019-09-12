@@ -16,32 +16,32 @@ public class ItemViewModelController {
     @Autowired
     ServiceLayer serviceLayer;
 
-    @RequestMapping
+    @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ItemViewModel createItem(@RequestBody @Valid ItemViewModel itemViewModel){
         return serviceLayer.saveItem(itemViewModel);
     }
 
-    @RequestMapping("/{id}")
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public ItemViewModel getItem(@PathVariable("id") int itemId){
         return serviceLayer.findItem(itemId);
     }
 
-    @RequestMapping("/update/{id}")
+    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateItem(@RequestBody @Valid ItemViewModel item ,@PathVariable("id") int itemId){
         item.setItemId(itemId);
         serviceLayer.updateItem(item);
     }
 
-    @RequestMapping("/all")
+    @RequestMapping(value = "/all" , method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<ItemViewModel> getAllItems(){
         return serviceLayer.findAllItems();
     }
 
-    @RequestMapping("/delete/{id}")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void deleteItem(@PathVariable("id") int itemId){
         serviceLayer.removeItem(itemId);
