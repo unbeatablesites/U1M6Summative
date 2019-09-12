@@ -1,11 +1,14 @@
 package com.company.U1M6Summative.dto;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Item {
     private int id;
+    @NotEmpty
     private String name;
+    
     private String description;
     private BigDecimal dailyRate;
 
