@@ -43,6 +43,10 @@ public class CustomerDaoTest {
         assertEquals(customer, customer2); //test that the created customer and the retrieved customer object are the same.
 
     }
+    @Before
+    public void setUp(){
+
+    }
 
     @Test
     public void getCustomer() {
@@ -52,6 +56,7 @@ public class CustomerDaoTest {
         customer.setEmail("all@redbox1.com");
         customer.setPhone("444-555-3233");
         customer.setCompany("Hawaii");
+        customer = customerDao.addCustomer(customer);
 
         Customer customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
 
@@ -130,30 +135,10 @@ public class CustomerDaoTest {
         customer = customerDao.addCustomer(customer); //add customer to DB
         Customer customer2 = customerDao.getCustomer(customer.getId());//create customer2, get customerID from db and assign it to customer2
         customerDao.deleteCustomer(customer2.getId());//
-        customerDao.getCustomer(customer2.getId());
+        customer2 = customerDao.getCustomer(customer2.getId());
         assertNull(customer2);
 
     }
 
-    @Test
-    public void addGetDeleteCustomer(){
 
-        Customer customer = new Customer();
-        customer.setFirstName("John");
-        customer.setLastName("Doe");
-        customer.setEmail("wow@now.com");
-        customer.setPhone("123-342-3433");
-        customer.setCompany("GeorgiaTech");
-
-        customer = customerDao.addCustomer(customer);//adds customer to database
-
-        Customer customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
-
-        assertEquals(customer, customer2); //test that the created customer and the retrieved customer object are the same.
-
-        customerDao.deleteCustomer(customer.getId()); //delete customer object
-
-        assertNull(customer2);//test that customer2 is now null since customer was deleted.
-
-    }
 }
