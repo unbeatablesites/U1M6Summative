@@ -39,7 +39,7 @@ public class ServiceLayer {
         return null;
     }
 
-    public InvoiceViewModel findInvoice(InvoiceViewModel invoiceViewModel){
+    public InvoiceViewModel findInvoice(int id){
         return null;
     }
 

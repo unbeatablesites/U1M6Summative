@@ -141,12 +141,7 @@ public class ServiceLayerTest {
     @Test
     public void saveInvoice() {
         InvoiceViewModel ivm = new InvoiceViewModel();
-        /*private int id;
-        private Customer customer;
-        private LocalDate orderDate;
-        private LocalDate pickUpDate;
-        private LocalDate returnDate;
-        private List<InvoiceItem> invoiceItems*/
+
         Customer customer = new Customer();
         customer.setFirstName("John");
         customer.setLastName("Doe");
@@ -168,27 +163,204 @@ public class ServiceLayerTest {
         invoiceItem.setDiscount(new BigDecimal("20.00"));
 
         List<InvoiceItem> invoiceItemList = new ArrayList<>();
+        invoiceItemList.add(invoiceItem);
 
+        ivm.setInvoiceItems(invoiceItemList);
+
+        ivm = serviceLayer.saveInvoice(ivm);
+
+        InvoiceViewModel fromService = serviceLayer.findInvoice(ivm.getId());
+        assertEquals(ivm, fromService);
     }
 
     @Test
     public void findInvoice() {
+        InvoiceViewModel ivm = new InvoiceViewModel();
+
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+        customer = serviceLayer.saveCustomer(customer);
+
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(LocalDate.of(2019, 01, 01));
+        ivm.setPickUpDate(LocalDate.of(2019, 01,07));
+        ivm.setReturnDate(LocalDate.of(2019, 01, 15));
+        ivm.setLateFee(new BigDecimal("8.00"));
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        List<InvoiceItem> invoiceItemList = new ArrayList<>();
+        invoiceItemList.add(invoiceItem);
+
+        ivm.setInvoiceItems(invoiceItemList);
+
+        ivm = serviceLayer.saveInvoice(ivm);
+
+        InvoiceViewModel fromService = serviceLayer.findInvoice(ivm.getId());
+        assertEquals(ivm, fromService);
     }
 
     @Test
     public void findAllInvoices() {
+        InvoiceViewModel ivm = new InvoiceViewModel();
+
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+        customer = serviceLayer.saveCustomer(customer);
+
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(LocalDate.of(2019, 01, 01));
+        ivm.setPickUpDate(LocalDate.of(2019, 01,07));
+        ivm.setReturnDate(LocalDate.of(2019, 01, 15));
+        ivm.setLateFee(new BigDecimal("8.00"));
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        List<InvoiceItem> invoiceItemList = new ArrayList<>();
+        invoiceItemList.add(invoiceItem);
+
+        ivm.setInvoiceItems(invoiceItemList);
+
+        ivm = serviceLayer.saveInvoice(ivm);
+
+        List<InvoiceViewModel> imvList = serviceLayer.findAllInvoices();
+        assertEquals(1, imvList.size());
+        assertEquals(ivm, imvList.get(0));
     }
 
     @Test
     public void updateInvoice() {
+        InvoiceViewModel ivm = new InvoiceViewModel();
+
+        ivm.setId(1);
+
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+        customer = serviceLayer.saveCustomer(customer);
+
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(LocalDate.of(2019, 01, 01));
+        ivm.setPickUpDate(LocalDate.of(2019, 01,07));
+        ivm.setReturnDate(LocalDate.of(2019, 01, 15));
+        ivm.setLateFee(new BigDecimal("8.00"));
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        List<InvoiceItem> invoiceItemList = new ArrayList<>();
+        invoiceItemList.add(invoiceItem);
+
+        ArgumentCaptor<Invoice> invoiceCaptor = ArgumentCaptor.forClass(Invoice.class);
+
+        doNothing().when(invoiceDao).updateInvoice(invoiceCaptor.capture());
+
+        serviceLayer.updateInvoice(ivm);
+        verify(invoiceDao, times(1)).updateInvoice(invoiceCaptor.getValue());
+
+        Invoice invoice = invoiceCaptor.getValue();
+        assertEquals(ivm.getId(), invoice.getId());
+        assertEquals(ivm.getCustomer().getId(), invoice.getCustomerId());
+        assertEquals(ivm.getOrderDate(), invoice.getOrderDate());
+        assertEquals(ivm.getPickUpDate(), invoice.getPickUpDate());
+        assertEquals(ivm.getReturnDate(), invoice.getReturnDate());
+        assertEquals(ivm.getLateFee(), invoice.getLateFee());
     }
 
     @Test
     public void findInvoicesByCustomer() {
+        InvoiceViewModel ivm = new InvoiceViewModel();
+
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+        customer = serviceLayer.saveCustomer(customer);
+
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(LocalDate.of(2019, 01, 01));
+        ivm.setPickUpDate(LocalDate.of(2019, 01,07));
+        ivm.setReturnDate(LocalDate.of(2019, 01, 15));
+        ivm.setLateFee(new BigDecimal("8.00"));
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        List<InvoiceItem> invoiceItemList = new ArrayList<>();
+        invoiceItemList.add(invoiceItem);
+
+        ivm.setInvoiceItems(invoiceItemList);
+
+        ivm = serviceLayer.saveInvoice(ivm);
+
+        List<InvoiceViewModel> imvList = serviceLayer.findInvoicesByCustomer(ivm.getCustomer().getId());
+        assertEquals(1, imvList.size());
+        assertEquals(ivm, imvList.get(0));
     }
 
     @Test
     public void removeInvoice() {
+        InvoiceViewModel ivm = new InvoiceViewModel();
+
+        ivm.setId(1);
+
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+        customer = serviceLayer.saveCustomer(customer);
+
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(LocalDate.of(2019, 01, 01));
+        ivm.setPickUpDate(LocalDate.of(2019, 01,07));
+        ivm.setReturnDate(LocalDate.of(2019, 01, 15));
+        ivm.setLateFee(new BigDecimal("8.00"));
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        List<InvoiceItem> invoiceItemList = new ArrayList<>();
+        invoiceItemList.add(invoiceItem);
+
+        ArgumentCaptor<Integer> idCaptor = ArgumentCaptor.forClass(Integer.class);
+
+        doNothing().when(invoiceDao).deleteInvoice(idCaptor.capture());
+        serviceLayer.removeInvoice(ivm.getId());
+        verify(invoiceDao, times(1)).deleteInvoice(idCaptor.getValue());
+
+        assertEquals(1, idCaptor.getValue().intValue());
     }
 
     //=========================================================================
