@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Repository
-public class CustomerDaoJdbcTemplateImpl implements CustomerDao{
+public class CustomerDaoJdbcTemplateImpl implements CustomerDao {
 
     private static final String INSERT_CUSTOMER_SQL =
             "INSERT INTO customer (first_name, last_name, email, company, phone) VALUES(?, ?, ?, ?, ?)";
@@ -22,8 +22,8 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao{
     private static final String SELECT_ALL_CUSTOMERS_SQL =
             "SELECT * FROM customer";
 
-   private static final String UPDATE_CUSTOMER_SQL =
-           "UPDATE customer SET first_name = ?, last_name = ?, email = ?, company = ?, phone = ? WHERE customer_id = ?";
+    private static final String UPDATE_CUSTOMER_SQL =
+            "UPDATE customer SET first_name = ?, last_name = ?, email = ?, company = ?, phone = ? WHERE customer_id = ?";
 
     private static final String DELETE_CUSTOMER_SQL =
             "DELETE FROM customer WHERE customer_id = ?";
@@ -46,9 +46,9 @@ public class CustomerDaoJdbcTemplateImpl implements CustomerDao{
 
     @Override
     public Customer getCustomer(int id) {
-        try{
+        try {
             return jdbcTemplate.queryForObject(SELECT_CUSTOMER_SQL, this::mapRowToCustomer, id);
-        } catch (EmptyResultDataAccessException e){
+        } catch (EmptyResultDataAccessException e) {
             return null;
         }
     }

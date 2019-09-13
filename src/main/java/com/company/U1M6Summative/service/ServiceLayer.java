@@ -43,7 +43,7 @@ public class ServiceLayer {
         return null;
     }
 
-    private InvoiceViewModel buildInvoiceViewModel(Invoice invoice){
+    public InvoiceViewModel buildInvoiceViewModel(Invoice invoice){
         return null;
     }
 
@@ -79,11 +79,11 @@ public class ServiceLayer {
         return null;
     }
 
-    void udpateCustomer(Customer customer){
+    public void udpateCustomer(Customer customer){
 
     }
 
-    void deleteCustomer(int id){
+    public void deleteCustomer(int id){
 
     }
 
@@ -105,7 +105,7 @@ public class ServiceLayer {
     void updateInvoiceItem(InvoiceItem invoiceItem){
 
     }
-    void deleteInvoiceItem(int id){
+    public void deleteInvoiceItem(int id){
 
     }
 
@@ -125,11 +125,11 @@ public class ServiceLayer {
         return null;
     }
 
-    void updateItem(Item item){
+    public void updateItem(Item item){
 
     }
 
-    void deleteItem(int id){
+    public void deleteItem(int id){
 
     }
 }
