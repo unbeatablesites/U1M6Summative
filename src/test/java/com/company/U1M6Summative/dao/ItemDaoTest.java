@@ -73,19 +73,48 @@ public class ItemDaoTest {
 
     @Test
     public void updateItem() {
+
+        Item item = new Item();
+        item.setName("Random item");
+        item.setDescription("Random description");
+        item.setDailyRate(09.99);
+
+        item = itemDao.addItem(item);
+
+        item.setName("Random item 2");
+        item.setDescription("Random description 2");
+        item.setDailyRate(09.99);
+
+        itemDao.updateItem(item);
+
+        Item item1 = itemDao.getItem(item.getId());
+
+        assertEquals(item1, item);
+
     }
 
     @Test
     public void deleteItem() {
+
+        Item item = new Item();
+        item.setName("Random item");
+        item.setDescription("Random description");
+        item.setDailyRate(09.99);
+
+        itemDao.deleteItem(item.getId());
+
+        item = itemDao.getItem(item.getId());
+
+        assertNull(item);
     }
 
     @Test
     public void addGetUpdateDeleteItem(){
 
-        Item item = new Item();
-        item.setDailyRate();  //big decimal data type format???? wth
-        item.setDescription("Movie");
-        item.setName("Bad Boys");
+//        Item item = new Item();
+//        item.setDailyRate();  //big decimal data type format???? wth
+//        item.setDescription("Movie");
+//        item.setName("Bad Boys");
 
     }
 

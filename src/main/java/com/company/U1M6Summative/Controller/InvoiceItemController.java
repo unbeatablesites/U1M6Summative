@@ -30,7 +30,7 @@ public class InvoiceItemController {
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateItem(@RequestBody @Valid InvoiceItem invoiceItem){
-        serviceLayer.updateInvoice(invoiceItem);
+        serviceLayer.updateInvoiceItem(invoiceItem);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -46,4 +46,3 @@ public class InvoiceItemController {
     }
 
 }
-
