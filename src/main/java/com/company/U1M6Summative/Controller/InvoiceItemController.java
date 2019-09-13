@@ -1,5 +1,6 @@
 package com.company.U1M6Summative.Controller;
 
+
 import com.company.U1M6Summative.dto.InvoiceItem;
 import com.company.U1M6Summative.service.ServiceLayer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,11 @@ public class InvoiceItemController {
         return serviceLayer.findInvoiceItem(invoiceItemId);
     }
 
+    @RequestMapping(value = "/", method = RequestMethod.PUT)
+    @ResponseStatus(HttpStatus.OK)
+    public void updateItem(@RequestBody @Valid InvoiceItem invoiceItem){
+        serviceLayer.updateInvoiceItem(invoiceItem);
+    }
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -37,8 +43,9 @@ public class InvoiceItemController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteItem(@PathVariable("invoice_id") int invoiceItemIdId){
-        serviceLayer.removeInvoice(invoiceItemIdId);
+    public void deleteItem(@PathVariable("invoice_id") int invoiceItemId){
+        serviceLayer.removeInvoiceItem(invoiceItemId);
     }
 
 }
+
