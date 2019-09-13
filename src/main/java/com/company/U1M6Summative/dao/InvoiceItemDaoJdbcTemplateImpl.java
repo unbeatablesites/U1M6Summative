@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -40,6 +41,7 @@ public class InvoiceItemDaoJdbcTemplateImpl implements InvoiceItemDao{
         return invoiceItem;
     }
     @Override
+    @Transactional
     public InvoiceItem addInvoiceItem(InvoiceItem invoiceItem) {
         jdbcTemplate.update(INSERT_INVOICE_ITEM,
                 invoiceItem.getInvoiceId(),

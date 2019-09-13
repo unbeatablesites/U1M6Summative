@@ -36,17 +36,9 @@ public class ItemDaoTest {
         item.setDailyRate(new BigDecimal("11.42"));
 
         item = itemDao.addItem(item);
-        Item item2 = itemDao.getItem(item.getId());
-        assertEquals(item,item2);
+        //Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item,itemDao.getItem(item.getId()));
 
-//        Item item = new Item();
-//        item.setName("Random item");
-//        item.setDescription("Random description");
-//        item.setDailyRate(09.99);
-//
-//        item = itemDao.addItem(item);
-//
-//        Item item1 = itemDao.getItem(item.getId());
     }
 
     @Test
@@ -83,27 +75,6 @@ public class ItemDaoTest {
         assertEquals(IList.size(), 2);
     }
 
-//    @Test
-//    public void updateCustomer() {
-//        Customer customer = new Customer();//create customer
-//        customer.setId(customer.getId());
-//        customer.setFirstName("Jack");
-//        customer.setLastName("Donnie");
-//        customer.setEmail("ohh@kay.com");
-//        customer.setPhone("999-333-4444");
-//        customer.setCompany("Mars");
-//        customer = customerDao.addCustomer(customer); //add customer to db via the dao
-//
-//        customer.setFirstName("UPDATED"); //set new customer first name
-//        customer.setLastName("UPDATED");//set new customer last name
-//        customerDao.updateCustomer(customer);//send customer update to db via dao
-//
-//        //CustomerDao.updateCustomer(customer);
-//
-//        Customer customer2 = customerDao.getCustomer(customer.getId());
-//
-//        assertEquals(customer, customer2);
-//    }
     @Test
     public void updateItem() {
         Item item = new Item();
@@ -135,29 +106,6 @@ public class ItemDaoTest {
         assertNull(item2);
     }
 
-//    @Test
-//    public void addGetDeleteCustomer(){
-//
-//        Customer customer = new Customer();
-//        customer.setFirstName("John");
-//        customer.setLastName("Doe");
-//        customer.setEmail("wow@now.com");
-//        customer.setPhone("123-342-3433");
-//        customer.setCompany("GeorgiaTech");
-//
-//        customer = customerDao.addCustomer(customer);//adds customer to database
-//
-//        Customer customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
-//
-//        assertEquals(customer, customer2); //test that the created customer and the retrieved customer object are the same.
-//
-//        customerDao.deleteCustomer(customer.getId()); //delete customer object
-//
-//        assertNull(customer2);//test that customer2 is now null since customer was deleted.
-//
-//    }
-//}
-
     @Test
     public void addGetUpdateDeleteItem(){
 
@@ -173,10 +121,6 @@ public class ItemDaoTest {
         itemDao.deleteItem(item.getId());
         assertNull(item2);
 
-//        Item item = new Item();
-//        item.setDailyRate();  //big decimal data type format???? wth
-//        item.setDescription("Movie");
-//        item.setName("Bad Boys");
 
     }
 
