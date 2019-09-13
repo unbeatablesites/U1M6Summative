@@ -30,34 +30,37 @@ public class InvoiceDaoTest {
 
     @Before
     public void setUp(){
-        List<Customer> listOfCustomers = customerDao.getAllCustomers();
-        for( Customer customer : listOfCustomers){
-            customerDao.deleteCustomer(customer.getId());
-        }
         List<Invoice> listOfInvoices = invoiceDao.getAllInvoices();
         for( Invoice invoice : listOfInvoices ){
             invoiceDao.deleteInvoice(invoice.getId());
         }
+
+        List<Customer> listOfCustomers = customerDao.getAllCustomers();
+        for( Customer customer : listOfCustomers){
+            customerDao.deleteCustomer(customer.getId());
+        }
+
         customer = new Customer();
         customer.setFirstName("John");
         customer.setLastName("Doe");
         customer.setEmail("wow@now.com");
         customer.setPhone("123-342-3433");
         customer.setCompany("GeorgiaTech");
+        customer = customerDao.addCustomer(customer);
 
         invoice = new Invoice();
         invoice.setCustomerId(customer.getId());
         invoice.setOrderDate(LocalDate.of(2019,05,24));
         invoice.setPickUpDate(LocalDate.of(2019, 05, 25));
         invoice.setReturnDate(LocalDate.of(2019, 05, 28));
-        invoice.setLateFee(new BigDecimal("0"));
+        invoice.setLateFee(new BigDecimal("0.00"));
 
         invoice1 = new Invoice();
         invoice1.setCustomerId(customer.getId());
-        invoice.setOrderDate(LocalDate.of(2019,06,12));
-        invoice.setPickUpDate(LocalDate.of(2019, 06, 12));
-        invoice.setReturnDate(LocalDate.of(2019, 06, 15));
-        invoice.setLateFee(new BigDecimal("3.5"));
+        invoice1.setOrderDate(LocalDate.of(2019,06,12));
+        invoice1.setPickUpDate(LocalDate.of(2019, 06, 12));
+        invoice1.setReturnDate(LocalDate.of(2019, 06, 15));
+        invoice1.setLateFee(new BigDecimal("3.50"));
 
 
     }
@@ -104,7 +107,6 @@ public class InvoiceDaoTest {
 
     @Test
     public void getInvoiceByCustomer() {
-        customer = customerDao.addCustomer(customer);
         invoice = invoiceDao.addInvoice(invoice);
         invoice1 = invoiceDao.addInvoice(invoice1);
 
