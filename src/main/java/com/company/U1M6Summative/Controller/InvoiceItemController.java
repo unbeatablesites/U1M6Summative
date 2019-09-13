@@ -34,6 +34,7 @@ public class InvoiceItemController {
         serviceLayer.updateInvoiceItem(invoiceItem);
     }
 
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<InvoiceItem> getAllInvoiceItems(){

@@ -3,7 +3,6 @@ package com.company.U1M6Summative.Controller;
 
 import com.company.U1M6Summative.dto.Customer;
 import com.company.U1M6Summative.service.ServiceLayer;
-import com.company.U1M6Summative.viewmodel.CustomerViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +42,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public void updateCustomer(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
         customer.setId(customerId);
-        serviceLayer.updateCustomer(customer);
+        serviceLayer.udpateCustomer(customer);
     }
 
     @RequestMapping(value = "/{customerId}" , method = RequestMethod.DELETE)
