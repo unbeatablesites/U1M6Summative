@@ -28,7 +28,6 @@ public class ItemDaoTest {
     @Autowired
     ItemDao itemDao;
 
-
     @Test
     public void addItem() {
         Item item = new Item();
@@ -53,7 +52,6 @@ public class ItemDaoTest {
 
 
 
-
     }
 
     @Test
@@ -62,14 +60,14 @@ public class ItemDaoTest {
         Item item = new Item();
         item.setName("Random item");
         item.setDescription("Random description");
-        item.setDailyRate(09.99);
+        item.setDailyRate(new BigDecimal(2.99));
 
         item = itemDao.addItem(item);
 
         item = new Item();
         item.setName("Random item 2");
         item.setDescription("Random description 2");
-        item.setDailyRate(09.99);
+        item.setDailyRate(new BigDecimal(4.99));
 
         item = itemDao.addItem(item);
 
@@ -78,8 +76,40 @@ public class ItemDaoTest {
 
     }
 
+//    @Test
+//    public void updateCustomer() {
+//        Customer customer = new Customer();//create customer
+//        customer.setId(customer.getId());
+//        customer.setFirstName("Jack");
+//        customer.setLastName("Donnie");
+//        customer.setEmail("ohh@kay.com");
+//        customer.setPhone("999-333-4444");
+//        customer.setCompany("Mars");
+//        customer = customerDao.addCustomer(customer); //add customer to db via the dao
+//
+//        customer.setFirstName("UPDATED"); //set new customer first name
+//        customer.setLastName("UPDATED");//set new customer last name
+//        customerDao.updateCustomer(customer);//send customer update to db via dao
+//
+//        //CustomerDao.updateCustomer(customer);
+//
+//        Customer customer2 = customerDao.getCustomer(customer.getId());
+//
+//        assertEquals(customer, customer2);
+//    }
     @Test
     public void updateItem() {
+        Item item = new Item();
+        item.setName("DVD");
+        item.setDescription("Shuttle Launch");
+        item.setDailyRate(new BigDecimal(10.99));
+        item = itemDao.addItem(item);
+
+        item.setName("UPDATE");
+        item.setDescription("UPDATE");
+        itemDao.updateItem(item);
+        //Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item, itemDao.getItem(item.getId()));
     }
 
     @Test

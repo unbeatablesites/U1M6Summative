@@ -53,6 +53,8 @@ public class CustomerDaoTest {
         customer.setPhone("444-555-3233");
         customer.setCompany("Hawaii");
 
+        customer = customerDao.addCustomer(customer);
+
         Customer customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
 
         assertEquals(customer, customer2); //test that the created customer and the retrieved customer object are the same.
@@ -68,7 +70,7 @@ public class CustomerDaoTest {
         customer.setPhone("444-555-3233");
         customer.setCompany("Hawaii");
 
-        customer = customerDao.addCustomer(customer);//adds customer to database
+        customerDao.addCustomer(customer);//adds customer to database
 
         Customer customer2 = new Customer();
         customer2.setFirstName("Bart");
@@ -77,7 +79,7 @@ public class CustomerDaoTest {
         customer2.setPhone("444-555-3233");
         customer2.setCompany("Hawaii");
 
-        customer2 = customerDao.addCustomer(customer2);
+        customerDao.addCustomer(customer2);
 
         Customer customer3 = new Customer();
         customer3.setFirstName("Bart");
@@ -86,7 +88,7 @@ public class CustomerDaoTest {
         customer3.setPhone("444-555-3233");
         customer3.setCompany("Hawaii");
 
-        customer3 = customerDao.addCustomer(customer3);
+        customerDao.addCustomer(customer3);
 
         //Gets all customers, and adds them to a list
         List<Customer> customerList = customerDao.getAllCustomers();
@@ -98,24 +100,24 @@ public class CustomerDaoTest {
 
     @Test
     public void updateCustomer() {
-        Customer customer = new Customer();
+        Customer customer = new Customer();//create customer
         customer.setId(customer.getId());
         customer.setFirstName("Jack");
         customer.setLastName("Donnie");
         customer.setEmail("ohh@kay.com");
         customer.setPhone("999-333-4444");
         customer.setCompany("Mars");
-        customer = customerDao.addCustomer(customer);
+        customer = customerDao.addCustomer(customer); //add customer to db via the dao
 
-        customer.setFirstName("UPDATED");
-        customer.setLastName("UPDATED");
-        customerDao.updateCustomer(customer);
+        customer.setFirstName("UPDATED"); //set new customer first name
+        customer.setLastName("UPDATED");//set new customer last name
+        customerDao.updateCustomer(customer);//send customer update to db via dao
 
         //CustomerDao.updateCustomer(customer);
 
         Customer customer2 = customerDao.getCustomer(customer.getId());
 
-        assertEquals(customer2, customer);
+        assertEquals(customer, customer2);
     }
 
     @Test
@@ -128,14 +130,12 @@ public class CustomerDaoTest {
         customer.setCompany("Georgia");
 
         customer = customerDao.addCustomer(customer); //add customer to DB
-        Customer customer2 = customerDao.getCustomer(customer.getId());//create customer2, get customerID from db and assign it to customer2
-        customerDao.deleteCustomer(customer2.getId());//
-        customerDao.getCustomer(customer2.getId());
-        assertNull(customer2);
+        customerDao.deleteCustomer(customer.getId());//delete customer2 from db
+        assertNull(customerDao.getCustomer(customer.getId()));//test that customer2 is deleted and now null
 
     }
 
-    @Test
+    /*@Test
     public void addGetDeleteCustomer(){
 
         Customer customer = new Customer();
@@ -155,5 +155,5 @@ public class CustomerDaoTest {
 
         assertNull(customer2);//test that customer2 is now null since customer was deleted.
 
-    }
+    }*/
 }
