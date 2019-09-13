@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -53,14 +54,14 @@ public class InvoiceDaoTest {
         invoice.setOrderDate(LocalDate.of(2019,05,24));
         invoice.setPickUpDate(LocalDate.of(2019, 05, 25));
         invoice.setReturnDate(LocalDate.of(2019, 05, 28));
-        invoice.setLateFee(new BigDecimal("0.00"));
+        invoice.setLateFee(new BigDecimal("0").setScale(2, RoundingMode.CEILING));
 
         invoice1 = new Invoice();
         invoice1.setCustomerId(customer.getId());
         invoice1.setOrderDate(LocalDate.of(2019,06,12));
         invoice1.setPickUpDate(LocalDate.of(2019, 06, 12));
         invoice1.setReturnDate(LocalDate.of(2019, 06, 15));
-        invoice1.setLateFee(new BigDecimal("3.50"));
+        invoice1.setLateFee(new BigDecimal("3.5").setScale(2, RoundingMode.CEILING));
 
 
     }
