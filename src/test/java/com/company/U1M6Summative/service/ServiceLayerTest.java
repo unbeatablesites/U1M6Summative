@@ -7,6 +7,7 @@ import com.company.U1M6Summative.dto.InvoiceItem;
 import com.company.U1M6Summative.dto.Item;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -166,18 +167,72 @@ public class ServiceLayerTest {
 
     @Test
     public void saveCustomer() {
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+
+        customer = serviceLayer.saveCustomer(customer);
+        Customer fromService = serviceLayer.findCustomer(customer.getId());
+        assertEquals(customer, fromService);
     }
 
     @Test
     public void findCustomer() {
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+
+        customer = serviceLayer.saveCustomer(customer);
+        Customer fromService = serviceLayer.findCustomer(customer.getId());
+        assertEquals(customer, fromService);
     }
 
     @Test
     public void findAllCustomers() {
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+
+        customer = serviceLayer.saveCustomer(customer);
+        Customer fromService = serviceLayer.findCustomer(customer.getId());
+        assertEquals(customer, fromService);
+
+        List<Customer> customerList = serviceLayer.findAllCustomers();
+        assertEquals(1, customerList.size());
+        assertEquals(customer, customerList.get(0));
     }
 
     @Test
-    public void udpateCustomer() {
+    public void updateCustomer() {
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+
+        ArgumentCaptor<Customer> customerCaptor = ArgumentCaptor.forClass(Customer.class);
+
+        doNothing().when(customerDao).updateCustomer(customerCaptor.capture());
+        serviceLayer.updateCustomer(customer);
+        verify(customerDao, times(1)).updateCustomer(customerCaptor.getValue());
+
+        Customer customer1 = customerCaptor.getValue();
+        assertEquals(customer.getId(), customer1.getId());
+        assertEquals(customer.getFirstName(), customer1.getFirstName());
+        assertEquals(customer.getLastName(), customer1.getLastName());
+        assertEquals(customer.getEmail(), customer1.getEmail());
+        assertEquals(customer.getCompany(), customer1.getCompany());
+        assertEquals(customer.getPhone(), customer1.getPhone());
     }
 
     @Test
