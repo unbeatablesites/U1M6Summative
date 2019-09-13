@@ -40,10 +40,13 @@ public class ServiceLayer {
     }
 
     public InvoiceViewModel findInvoice(int id){
-        return null;
+        Invoice invoice = invoiceDao.getInvoice(id);
+        return buildInvoiceViewModel(invoice);
     }
 
     public InvoiceViewModel buildInvoiceViewModel(Invoice invoice){
+        Customer customer = customerDao.getCustomer(invoice.getCustomerId());
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getAllInvoiceItems();
         return null;
     }
 
@@ -56,6 +59,7 @@ public class ServiceLayer {
     }
 
     public List<InvoiceViewModel> findInvoicesByCustomer(int id){
+        List<Invoice> invoiceItemList = invoiceDao.getInvoiceByCustomer(id);
         return null;
     }
 
@@ -68,22 +72,23 @@ public class ServiceLayer {
     //Customer Service Layer
     //=========================================================================
     public Customer saveCustomer(Customer customer){
-        return null;
+        return customerDao.addCustomer(customer);
     }
 
     public Customer findCustomer(int id){
-        return null;
+        return customerDao.getCustomer(id);
     }
 
     public List<Customer> findAllCustomers(){
-        return null;
+        return customerDao.getAllCustomers();
     }
 
     public void updateCustomer(Customer customer){
-
+        customerDao.updateCustomer(customer);
     }
 
     public void removeCustomer(int id){
+        customerDao.deleteCustomer(id);
     }
 
     //=========================================================================
@@ -91,23 +96,23 @@ public class ServiceLayer {
     //=========================================================================
 
     public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem){
-        return null;
+        return invoiceItemDao.addInvoiceItem(invoiceItem);
     }
 
     public InvoiceItem findInvoiceItem(int id){
-        return null;
+        return invoiceItemDao.getInvoiceItem(id);
     }
 
     public List<InvoiceItem> findAllInvoiceItems(){
-        return null;
+        return invoiceItemDao.getAllInvoiceItems();
     }
 
     public void updateInvoiceItem(InvoiceItem invoiceItem){
-
+        invoiceItemDao.updateInvoiceItem(invoiceItem);
     }
 
     public void removeInvoiceItem(int id){
-
+        invoiceItemDao.deleteInvoiceItem(id);
     }
 
     //=========================================================================
@@ -115,22 +120,22 @@ public class ServiceLayer {
     //=========================================================================
 
     public Item saveItem(Item item){
-        return null;
+        return itemDao.addItem(item);
     }
 
     public Item findItem(int id){
-        return null;
+        return itemDao.getItem(id);
     }
 
     public List<Item> findAllItems(){
-        return null;
+        return itemDao.getAllItems();
     }
 
     public void updateItem(Item item){
-
+        itemDao.updateItem(item);
     }
 
     public void removeItem(int id){
-
+        itemDao.deleteItem(id);
     }
 }
