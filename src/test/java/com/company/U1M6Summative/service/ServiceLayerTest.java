@@ -1,5 +1,6 @@
 package com.company.U1M6Summative.service;
 
+import com.company.U1M6Summative.ViewModel.InvoiceViewModel;
 import com.company.U1M6Summative.dao.*;
 import com.company.U1M6Summative.dto.Customer;
 import com.company.U1M6Summative.dto.Invoice;
@@ -139,6 +140,35 @@ public class ServiceLayerTest {
 
     @Test
     public void saveInvoice() {
+        InvoiceViewModel ivm = new InvoiceViewModel();
+        /*private int id;
+        private Customer customer;
+        private LocalDate orderDate;
+        private LocalDate pickUpDate;
+        private LocalDate returnDate;
+        private List<InvoiceItem> invoiceItems*/
+        Customer customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("johndoe@gmail.com");
+        customer.setCompany("Cognizant");
+        customer.setPhone("1112221234");
+        customer = serviceLayer.saveCustomer(customer);
+
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(LocalDate.of(2019, 01, 01));
+        ivm.setPickUpDate(LocalDate.of(2019, 01,07));
+        ivm.setReturnDate(LocalDate.of(2019, 01, 15));
+        ivm.setLateFee(new BigDecimal("8.00"));
+
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        List<InvoiceItem> invoiceItemList = new ArrayList<>();
+
     }
 
     @Test
@@ -212,6 +242,7 @@ public class ServiceLayerTest {
     @Test
     public void updateCustomer() {
         Customer customer = new Customer();
+        customer.setId(1);
         customer.setFirstName("John");
         customer.setLastName("Doe");
         customer.setEmail("johndoe@gmail.com");
@@ -295,6 +326,7 @@ public class ServiceLayerTest {
     public void updateInvoiceItem() {
         InvoiceItem invoiceItem =  new InvoiceItem();
         invoiceItem.setInvoiceId(1);
+        invoiceItem.setInvoiceId(1);
         invoiceItem.setQuantity(2);
         invoiceItem.setUnitRate(new BigDecimal("250.00"));
         invoiceItem.setDiscount(new BigDecimal("20.00"));
@@ -372,10 +404,35 @@ public class ServiceLayerTest {
 
     @Test
     public void updateItem() {
-        Item item =
+        Item item = new Item();
+        item.setId(1);
+        item.setName("Hot Air Balloon");
+        item.setDailyRate(new BigDecimal("200.00"));
+        item.setDescription("Blue");
+
+        ArgumentCaptor<Item> itemCaptor = ArgumentCaptor.forClass(Item.class);
+
+        doNothing().when(itemDao).updateItem(itemCaptor.capture());
+        serviceLayer.updateItem(item);
+        verify(itemDao, times(1)).updateItem(itemCaptor.getValue());
+
+        Item item1 = itemCaptor.getValue();
+        assertEquals(item.getId(), item1.getId());
+        assertEquals(item.getName(), item1.getName());
+        assertEquals(item.getDailyRate(), item1.getDailyRate());
+        assertEquals(item.getDescription(), item1.getDescription());
     }
 
     @Test
     public void deleteItem() {
+        Item item = new Item();
+        item.setId(1);
+
+        ArgumentCaptor<Integer> idCaptor = ArgumentCaptor.forClass(Integer.class);
+        doNothing().when(itemDao).deleteItem(idCaptor.capture());
+        serviceLayer.removeItem(1);
+
+        verify(itemDao, times(1)).deleteItem(idCaptor.getValue());
+        assertEquals(1, idCaptor.getValue().intValue());
     }
 }
