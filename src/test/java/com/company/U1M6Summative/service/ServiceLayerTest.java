@@ -5,6 +5,7 @@ import com.company.U1M6Summative.dto.Customer;
 import com.company.U1M6Summative.dto.Invoice;
 import com.company.U1M6Summative.dto.InvoiceItem;
 import com.company.U1M6Summative.dto.Item;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -119,6 +120,16 @@ public class ServiceLayerTest {
         doReturn(invoiceItem).when(invoiceItemDao).addInvoiceItem(invoiceItem1);
         doReturn(invoiceItem).when(invoiceItemDao).getInvoiceItem(1);
         doReturn(invoiceItemList).when(invoiceItemDao).getAllInvoiceItems();
+    }
+
+    @Before
+    public void setUp() throws Exception{
+        setupInvoiceDaoMock();
+        setupInvoiceItemDaoMock();
+        setupItemDaoMock();
+        setupCustomerDaoMock();
+
+        serviceLayer = new ServiceLayer(customerDao, invoiceDao, invoiceItemDao, itemDao);
     }
 
     //=========================================================================
