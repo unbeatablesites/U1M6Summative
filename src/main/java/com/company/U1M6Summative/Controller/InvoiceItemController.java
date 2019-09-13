@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 package com.company.U1M6Summative.Controller;
 
 import com.company.U1M6Summative.dto.InvoiceItem;
@@ -30,7 +31,7 @@ public class InvoiceItemController {
     @RequestMapping(value = "/", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateItem(@RequestBody @Valid InvoiceItem invoiceItem){
-        serviceLayer.updateInvoiceItem(invoiceItem);
+        serviceLayer.updateInvoice(invoiceItem);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -42,8 +43,7 @@ public class InvoiceItemController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void deleteItem(@PathVariable("invoice_id") int invoiceItemIdId){
-        serviceLayer.removeInvoiceItem(invoiceItemId);
+        serviceLayer.removeInvoice(invoiceItemIdId);
     }
 
 }
-

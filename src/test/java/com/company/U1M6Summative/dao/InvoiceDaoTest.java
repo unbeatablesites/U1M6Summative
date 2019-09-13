@@ -1,17 +1,32 @@
 package com.company.U1M6Summative.dao;
 
+import com.company.U1M6Summative.dto.Customer;
 import com.company.U1M6Summative.dto.Invoice;
+import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static org.junit.Assert.*;
-
+@RunWith(SpringJUnit4ClassRunner.class)
+@SpringBootTest
 public class InvoiceDaoTest {
+    @Autowired
+    private CustomerDao customerDao;
+
+    @Before
+    public void setUp(){
+
+    }
 
     @Test
     public void addInvoice() {
+        Customer customer = new Customer();
     }
 
     @Test
@@ -56,7 +71,8 @@ public class InvoiceDaoTest {
         invoice.setOrderDate().parse("2018-11-43");
         invoice.setPickUpDate();
         invoice.setReturnDate();
-        invoice.setReturnFee(14.99);
+        invoice.setLateFee(14.99);
+
     }
 
 }
