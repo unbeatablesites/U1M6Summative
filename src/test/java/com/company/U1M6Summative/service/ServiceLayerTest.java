@@ -203,8 +203,6 @@ public class ServiceLayerTest {
         customer.setPhone("1112221234");
 
         customer = serviceLayer.saveCustomer(customer);
-        Customer fromService = serviceLayer.findCustomer(customer.getId());
-        assertEquals(customer, fromService);
 
         List<Customer> customerList = serviceLayer.findAllCustomers();
         assertEquals(1, customerList.size());
@@ -237,6 +235,15 @@ public class ServiceLayerTest {
 
     @Test
     public void deleteCustomer() {
+        Customer customer = new Customer();
+        customer.setId(1);
+
+        ArgumentCaptor<Integer> idCaptor = ArgumentCaptor.forClass(Integer.class);
+        doNothing().when(customerDao).deleteCustomer(idCaptor.capture());
+        serviceLayer.removeCustomer(1);
+
+        verify(customerDao, times(1)).deleteCustomer(idCaptor.getValue());
+        assertEquals(1, idCaptor.getValue().intValue());
     }
 
     //=========================================================================
@@ -245,22 +252,77 @@ public class ServiceLayerTest {
 
     @Test
     public void saveInvoiceItem() {
+        InvoiceItem invoiceItem =  new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        invoiceItem = serviceLayer.saveInvoiceItem(invoiceItem);
+        InvoiceItem fromService = serviceLayer.findInvoiceItem(invoiceItem.getId());
+        assertEquals(invoiceItem, fromService);
     }
 
     @Test
     public void findInvoiceItem() {
+        InvoiceItem invoiceItem =  new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        invoiceItem = serviceLayer.saveInvoiceItem(invoiceItem);
+        InvoiceItem fromService = serviceLayer.findInvoiceItem(invoiceItem.getId());
+        assertEquals(invoiceItem, fromService);
     }
 
     @Test
     public void findAllInvoiceItems() {
+        InvoiceItem invoiceItem =  new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        invoiceItem = serviceLayer.saveInvoiceItem(invoiceItem);
+
+        List<InvoiceItem> invoiceItemList = serviceLayer.findAllInvoiceItems();
+        assertEquals(1, invoiceItemList.size());
+        assertEquals(invoiceItem, invoiceItemList.get(0));
     }
 
     @Test
     public void updateInvoiceItem() {
+        InvoiceItem invoiceItem =  new InvoiceItem();
+        invoiceItem.setInvoiceId(1);
+        invoiceItem.setQuantity(2);
+        invoiceItem.setUnitRate(new BigDecimal("250.00"));
+        invoiceItem.setDiscount(new BigDecimal("20.00"));
+
+        ArgumentCaptor<InvoiceItem> invoiceItemCaptor = ArgumentCaptor.forClass(InvoiceItem.class);
+
+        doNothing().when(invoiceItemDao).updateInvoiceItem(invoiceItemCaptor.capture());
+        serviceLayer.updateInvoiceItem(invoiceItem);
+        verify(invoiceItemDao, times(1)).updateInvoiceItem(invoiceItemCaptor.getValue());
+
+        InvoiceItem invoiceItem1 = invoiceItemCaptor.getValue();
+        assertEquals(invoiceItem.getId(), invoiceItem1.getId());
+        assertEquals(invoiceItem.getInvoiceId(), invoiceItem1.getInvoiceId());
+        assertEquals(invoiceItem.getQuantity(), invoiceItem1.getQuantity());
     }
 
     @Test
     public void removeInvoiceItem() {
+        InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setId(1);
+
+        ArgumentCaptor<Integer> idCaptor = ArgumentCaptor.forClass(Integer.class);
+        doNothing().when(invoiceItemDao).deleteInvoiceItem(idCaptor.capture());
+        serviceLayer.removeInvoiceItem(invoiceItem.getId());
+
+        verify(invoiceDao, times(1)).deleteInvoice(idCaptor.getValue());
+
+        assertEquals(1, idCaptor.getValue().intValue());
     }
 
     //=========================================================================
