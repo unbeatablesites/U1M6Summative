@@ -18,7 +18,7 @@ public class ItemViewModelController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public ItemViewModel createItem(@RequestBody @Valid ItemViewModel itemViewModel){
+    public I createItem(@RequestBody @Valid ItemViewModel itemViewModel){
         return serviceLayer.saveItem(itemViewModel);
     }
 
