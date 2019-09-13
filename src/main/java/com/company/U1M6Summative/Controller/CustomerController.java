@@ -42,7 +42,7 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public void updateCustomer(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
         customer.setId(customerId);
-        serviceLayer.udpateCustomer(customer);
+        serviceLayer.updateCustomer(customer);
     }
 
     @RequestMapping(value = "/{customerId}" , method = RequestMethod.DELETE)
