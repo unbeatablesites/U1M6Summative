@@ -7,14 +7,14 @@ import static org.junit.Assert.*;
 
 
 
-@Autowired
-    CustomerDao trackDao;
-@Autowired
-    InvoiceDao invoiceDao;
-@Autowired
-    InvoiceItemDao invoiceItemDao;
-@Autowired
-    ItemDao itemDao;
+//@Autowired
+//    CustomerDao trackDao;
+//@Autowired
+//    InvoiceDao invoiceDao;
+//@Autowired
+//    InvoiceItemDao invoiceItemDao;
+//@Autowired
+//    ItemDao itemDao;
 
 public class InvoiceItemDaoTest {
 

@@ -2,6 +2,7 @@ package com.company.U1M6Summative.dao;
 
 import com.company.U1M6Summative.dto.Customer;
 import com.company.U1M6Summative.dto.Invoice;
+//import jdk.vm.ci.meta.Local;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +12,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.Assert.*;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -18,60 +20,95 @@ import static org.junit.Assert.*;
 public class InvoiceDaoTest {
     @Autowired
     private CustomerDao customerDao;
+    @Autowired
+    private InvoiceDao invoiceDao;
+
+    private Customer customer;
+    private Invoice invoice;
+    private Invoice invoice1;
+
 
     @Before
     public void setUp(){
+        List<Customer> listOfCustomers = customerDao.getAllCustomers();
+        for( Customer customer : listOfCustomers){
+            customerDao.deleteCustomer(customer.getId());
+        }
+        List<Invoice> listOfInvoices = invoiceDao.getAllInvoices();
+        for( Invoice invoice : listOfInvoices ){
+            invoiceDao.deleteInvoice(invoice.getId());
+        }
+        customer = new Customer();
+        customer.setFirstName("John");
+        customer.setLastName("Doe");
+        customer.setEmail("wow@now.com");
+        customer.setPhone("123-342-3433");
+        customer.setCompany("GeorgiaTech");
+
+        invoice = new Invoice();
+        invoice.setCustomerId(customer.getId());
+        invoice.setOrderDate(LocalDate.of(2019,05,24));
+        invoice.setPickUpDate(LocalDate.of(2019, 05, 25));
+        invoice.setReturnDate(LocalDate.of(2019, 05, 28));
+        invoice.setLateFee(new BigDecimal("0"));
+
+        invoice1 = new Invoice();
+        invoice1.setCustomerId(customer.getId());
+        invoice.setOrderDate(LocalDate.of(2019,06,12));
+        invoice.setPickUpDate(LocalDate.of(2019, 06, 12));
+        invoice.setReturnDate(LocalDate.of(2019, 06, 15));
+        invoice.setLateFee(new BigDecimal("3.5"));
+
 
     }
 
     @Test
     public void addInvoice() {
-        Customer customer = new Customer();
+        invoice = invoiceDao.addInvoice(invoice);
+        invoice1 = invoiceDao.getInvoice(invoice.getId());
+        assertEquals(invoice, invoice1);
     }
 
     @Test
     public void getInvoice() {
+        invoice = invoiceDao.addInvoice(invoice);
+        invoice1 = invoiceDao.getInvoice(invoice.getId());
+        assertEquals(invoice, invoice1);
     }
 
     @Test
     public void getAllInvoices() {
-
+        invoiceDao.addInvoice(invoice);
+        List<Invoice> listOfInvoices = invoiceDao.getAllInvoices();
+        assertEquals(1, listOfInvoices.size());
 
     }
 
     @Test
     public void updateInvoice() {
-
-
+        invoice = invoiceDao.addInvoice(invoice);
+        invoice.setLateFee(new BigDecimal("2.35"));
+        invoiceDao.updateInvoice(invoice);
+        invoice1 = invoiceDao.getInvoice(invoice.getId());
+        assertEquals(invoice, invoice1);
+        assertEquals(new BigDecimal("2.35"), invoice1.getLateFee());
     }
 
     @Test
     public void deleteInvoice() {
+        invoice = invoiceDao.addInvoice(invoice);
+        invoiceDao.deleteInvoice(invoice.getId());
+        invoice = invoiceDao.getInvoice(invoice.getId());
+        assertNull(invoice);
     }
 
     @Test
     public void getInvoiceByCustomer() {
+        customer = customerDao.addCustomer(customer);
+        invoice = invoiceDao.addInvoice(invoice);
+        invoice1 = invoiceDao.addInvoice(invoice1);
+
+        List<Invoice> listOfInvoices = invoiceDao.getInvoiceByCustomer(customer.getId());
+        assertEquals(2, listOfInvoices.size());
     }
-
-/*
-    public class Invoice {
-        private int id;
-        private int customerId;
-        private LocalDate orderDate;
-        private LocalDate pickUpDate;
-        private LocalDate returnDate;
-        private BigDecimal returnFee;
-
- */
-    @Test
-    public void addGetDeleteInvoice(){
-//        Invoice invoice = new Invoice();
-//        //invoice.getCustomerId();
-//        invoice.setOrderDate().parse("2018-11-43");
-//        invoice.setPickUpDate();
-//        invoice.setReturnDate();
-//        invoice.setReturnFee(14.99);
-
-    }
-
 }
