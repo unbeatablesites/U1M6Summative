@@ -27,6 +27,16 @@ public class ItemDaoTest {
 
     @Test
     public void addItem() {
+
+        Item item = new Item();
+        item.setName("Random item");
+        item.setDescription("Random description");
+        item.setDailyRate(09.99);
+
+        item = itemDao.addItem(item);
+
+        Item item1 = itemDao.getItem(item.getId());
+
     }
 
     @Test
