@@ -62,14 +62,14 @@ public class ItemDaoTest {
         Item item = new Item();
         item.setName("Random item");
         item.setDescription("Random description");
-        item.setDailyRate(09.99);
+        item.setDailyRate(new BigDecimal(9.99));
 
         item = itemDao.addItem(item);
 
         item = new Item();
         item.setName("Random item 2");
         item.setDescription("Random description 2");
-        item.setDailyRate(09.99);
+        item.setDailyRate(new BigDecimal(9.99));
 
         item = itemDao.addItem(item);
 

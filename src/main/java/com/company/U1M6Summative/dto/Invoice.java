@@ -89,4 +89,16 @@ public class Invoice {
     public int hashCode() {
         return Objects.hash(getId(), getCustomerId(), getOrderDate(), getPickUpDate(), getReturnDate(), getLateFee());
     }
+
+    @Override
+    public String toString() {
+        return "Invoice{" +
+                "id=" + id +
+                ", customerId=" + customerId +
+                ", orderDate=" + orderDate +
+                ", pickUpDate=" + pickUpDate +
+                ", returnDate=" + returnDate +
+                ", lateFee=" + lateFee +
+                '}';
+    }
 }
