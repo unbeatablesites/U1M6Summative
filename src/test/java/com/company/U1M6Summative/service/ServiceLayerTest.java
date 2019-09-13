@@ -309,6 +309,8 @@ public class ServiceLayerTest {
         assertEquals(invoiceItem.getId(), invoiceItem1.getId());
         assertEquals(invoiceItem.getInvoiceId(), invoiceItem1.getInvoiceId());
         assertEquals(invoiceItem.getQuantity(), invoiceItem1.getQuantity());
+        assertEquals(invoiceItem.getUnitRate(), invoiceItem1.getUnitRate());
+        assertEquals(invoiceItem.getDiscount(), invoiceItem1.getDiscount());
     }
 
     @Test
@@ -332,18 +334,45 @@ public class ServiceLayerTest {
 
     @Test
     public void saveItem() {
+        Item item = new Item();
+        item.setName("Hot Air Balloon");
+        item.setDailyRate(new BigDecimal("200.00"));
+        item.setDescription("Blue");
+
+        item = serviceLayer.saveItem(item);
+        Item fromService = serviceLayer.findItem(item.getId());
+        assertEquals(item, fromService);
     }
 
     @Test
     public void findItem() {
+        Item item = new Item();
+        item.setName("Hot Air Balloon");
+        item.setDailyRate(new BigDecimal("200.00"));
+        item.setDescription("Blue");
+
+        item = serviceLayer.saveItem(item);
+        Item fromService = serviceLayer.findItem(item.getId());
+        assertEquals(item, fromService);
     }
 
     @Test
     public void findAllItems() {
+        Item item = new Item();
+        item.setName("Hot Air Balloon");
+        item.setDailyRate(new BigDecimal("200.00"));
+        item.setDescription("Blue");
+
+        item = serviceLayer.saveItem(item);
+
+        List<Item> itemList = serviceLayer.findAllItems();
+        assertEquals(1, itemList.size());
+        assertEquals(item, itemList.get(0));
     }
 
     @Test
     public void updateItem() {
+        Item item =
     }
 
     @Test
