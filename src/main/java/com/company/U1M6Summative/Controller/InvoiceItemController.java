@@ -27,11 +27,7 @@ public class InvoiceItemController {
         return serviceLayer.findInvoiceItem(invoiceItemId);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.PUT)
-    @ResponseStatus(HttpStatus.OK)
-    public void updateItem(@RequestBody @Valid InvoiceItem invoiceItem){
-        serviceLayer.updateInvoice(invoiceItem);
-    }
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
