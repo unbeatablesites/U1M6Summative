@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 
@@ -41,10 +43,32 @@ public class ItemDaoTest {
 
     @Test
     public void getItem() {
+
+
+
+
     }
 
     @Test
     public void getAllItems() {
+
+        Item item = new Item();
+        item.setName("Random item");
+        item.setDescription("Random description");
+        item.setDailyRate(09.99);
+
+        item = itemDao.addItem(item);
+
+        item = new Item();
+        item.setName("Random item 2");
+        item.setDescription("Random description 2");
+        item.setDailyRate(09.99);
+
+        item = itemDao.addItem(item);
+
+        List<Item> IList = itemDao.getAllItems();
+        assertEquals(IList.size(), 2);
+
     }
 
     @Test
