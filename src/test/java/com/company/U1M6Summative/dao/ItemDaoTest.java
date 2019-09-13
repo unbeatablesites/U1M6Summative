@@ -82,10 +82,10 @@ public class ItemDaoTest {
     @Test
     public void addGetUpdateDeleteItem(){
 
-        Item item = new Item();
-        item.setDailyRate();  //big decimal data type format???? wth
-        item.setDescription("Movie");
-        item.setName("Bad Boys");
+//        Item item = new Item();
+//        item.setDailyRate();  //big decimal data type format???? wth
+//        item.setDescription("Movie");
+//        item.setName("Bad Boys");
 
     }
 
