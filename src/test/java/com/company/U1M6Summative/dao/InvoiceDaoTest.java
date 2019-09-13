@@ -36,6 +36,7 @@ public class InvoiceDaoTest {
 
     @Test
     public void getInvoiceByCustomer() {
+
     }
 
 /*
@@ -56,7 +57,6 @@ public class InvoiceDaoTest {
         invoice.setPickUpDate();
         invoice.setReturnDate();
         invoice.setReturnFee(14.99);
-
     }
 
 }
