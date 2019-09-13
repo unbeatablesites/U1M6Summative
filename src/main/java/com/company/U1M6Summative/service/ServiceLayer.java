@@ -43,7 +43,7 @@ public class ServiceLayer {
         return null;
     }
 
-    private InvoiceViewModel buildInvoiceViewModel(Invoice invoice){
+    public InvoiceViewModel buildInvoiceViewModel(Invoice invoice){
         return null;
     }
 
@@ -84,7 +84,6 @@ public class ServiceLayer {
     }
 
     public void removeCustomer(int id){
-
     }
 
     //=========================================================================
