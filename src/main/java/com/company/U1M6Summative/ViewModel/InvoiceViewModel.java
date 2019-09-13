@@ -3,6 +3,7 @@ package com.company.U1M6Summative.ViewModel;
 import com.company.U1M6Summative.dto.Customer;
 import com.company.U1M6Summative.dto.InvoiceItem;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class InvoiceViewModel {
     private LocalDate orderDate;
     private LocalDate pickUpDate;
     private LocalDate returnDate;
+    private BigDecimal lateFee;
     private List<InvoiceItem> invoiceItems = new ArrayList<>();
 
     public int getId() {
@@ -62,6 +64,14 @@ public class InvoiceViewModel {
 
     public void setInvoiceItems(List<InvoiceItem> invoiceItems) {
         this.invoiceItems = invoiceItems;
+    }
+
+    public BigDecimal getLateFee() {
+        return lateFee;
+    }
+
+    public void setLateFee(BigDecimal lateFee) {
+        this.lateFee = lateFee;
     }
 
     @Override
