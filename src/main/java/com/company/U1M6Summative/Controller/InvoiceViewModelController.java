@@ -1,8 +1,8 @@
 package com.company.U1M6Summative.Controller;
 
 
+import com.company.U1M6Summative.ViewModel.InvoiceViewModel;
 import com.company.U1M6Summative.service.ServiceLayer;
-import com.company.U1M6Summative.viewmodel.InvoiceViewModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class InvoiceViewModelController {
     @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<InvoiceViewModel> getInvoice(@PathVariable("customerId") int customerId){
-        return serviceLayer.findInvoiceByCustomer(customerId);
+        return serviceLayer.findInvoicesByCustomer(customerId);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
