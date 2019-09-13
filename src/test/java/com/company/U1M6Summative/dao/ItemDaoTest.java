@@ -1,5 +1,4 @@
 package com.company.U1M6Summative.dao;
-
 import com.company.U1M6Summative.dto.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +35,10 @@ public class ItemDaoTest {
         item.setDescription("Running");
         item.setDailyRate(new BigDecimal("11.42"));
 
+        item = itemDao.addItem(item);
+        Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item,item2);
+
 //        Item item = new Item();
 //        item.setName("Random item");
 //        item.setDescription("Random description");
@@ -44,14 +47,19 @@ public class ItemDaoTest {
 //        item = itemDao.addItem(item);
 //
 //        Item item1 = itemDao.getItem(item.getId());
-
     }
 
     @Test
     public void getItem() {
+        Item item = new Item();
+        item.setId(01);
+        item.setName("DVDR");
+        item.setDescription("Walking");
+        item.setDailyRate(new BigDecimal("12.99"));
 
-
-
+        item = itemDao.addItem(item);
+        Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item, item2);
     }
 
     @Test
@@ -73,7 +81,6 @@ public class ItemDaoTest {
 
         List<Item> IList = itemDao.getAllItems();
         assertEquals(IList.size(), 2);
-
     }
 
 //    @Test
@@ -115,6 +122,17 @@ public class ItemDaoTest {
     @Test
     public void deleteItem() {
 
+        Item item = new Item();
+        item.setId(04);
+        item.setName("Movie1");
+        item.setDescription("DVD");
+        item.setDailyRate(new BigDecimal("33.22"));
+
+        item = itemDao.addItem(item);
+        Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item, item2);
+        itemDao.deleteItem(item.getId());
+        assertNull(item2);
     }
 
 //    @Test
