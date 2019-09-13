@@ -51,6 +51,7 @@ public class InvoiceDaoTest {
 
     @Test
     public void getInvoiceByCustomer() {
+
     }
 
 /*
@@ -65,12 +66,12 @@ public class InvoiceDaoTest {
  */
     @Test
     public void addGetDeleteInvoice(){
-//        Invoice invoice = new Invoice();
-//        //invoice.getCustomerId();
-//        invoice.setOrderDate().parse("2018-11-43");
-//        invoice.setPickUpDate();
-//        invoice.setReturnDate();
-//        invoice.setReturnFee(14.99);
+        Invoice invoice = new Invoice();
+        //invoice.getCustomerId();
+        invoice.setOrderDate().parse("2018-11-43");
+        invoice.setPickUpDate();
+        invoice.setReturnDate();
+        invoice.setLateFee(14.99);
 
     }
 
