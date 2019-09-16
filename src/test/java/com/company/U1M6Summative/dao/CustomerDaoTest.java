@@ -72,11 +72,13 @@ public class CustomerDaoTest {
         customer3.setPhone("444-555-3233");
         customer3.setCompany("Hawaii");
         customerDao.addCustomer(customer3);
+        customerDao.deleteCustomer();
         //Gets all customers, and adds them to a list
         List<Customer> customerList = customerDao.getAllCustomers();
         // Checks equality
         assertEquals(3, customerList.size());
     }
+
     @Test
     public void updateCustomer() {
         Customer customer = new Customer();//create customer
