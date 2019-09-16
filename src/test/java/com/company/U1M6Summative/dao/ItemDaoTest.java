@@ -1,5 +1,4 @@
 package com.company.U1M6Summative.dao;
-
 import com.company.U1M6Summative.dto.Item;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,7 +27,6 @@ public class ItemDaoTest {
     @Autowired
     ItemDao itemDao;
 
-
     @Test
     public void addItem() {
         Item item = new Item();
@@ -37,23 +35,23 @@ public class ItemDaoTest {
         item.setDescription("Running");
         item.setDailyRate(new BigDecimal("11.42"));
 
-//        Item item = new Item();
-//        item.setName("Random item");
-//        item.setDescription("Random description");
-//        item.setDailyRate(09.99);
-//
-//        item = itemDao.addItem(item);
-//
-//        Item item1 = itemDao.getItem(item.getId());
+        item = itemDao.addItem(item);
+        //Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item,itemDao.getItem(item.getId()));
 
     }
 
     @Test
     public void getItem() {
+        Item item = new Item();
+        item.setId(01);
+        item.setName("DVDR");
+        item.setDescription("Walking");
+        item.setDailyRate(new BigDecimal("12.99"));
 
-
-
-
+        item = itemDao.addItem(item);
+        Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item, item2);
     }
 
     @Test
@@ -62,56 +60,54 @@ public class ItemDaoTest {
         Item item = new Item();
         item.setName("Random item");
         item.setDescription("Random description");
-        item.setDailyRate(new BigDecimal(9.99));
+        item.setDailyRate(new BigDecimal(2.99));
 
         item = itemDao.addItem(item);
 
         item = new Item();
         item.setName("Random item 2");
         item.setDescription("Random description 2");
-        item.setDailyRate(new BigDecimal(9.99));
+        item.setDailyRate(new BigDecimal(4.99));
 
         item = itemDao.addItem(item);
 
         List<Item> IList = itemDao.getAllItems();
         assertEquals(IList.size(), 2);
-
     }
 
     @Test
     public void updateItem() {
+        Item item = new Item();
+        item.setName("DVD");
+        item.setDescription("Shuttle Launch");
+        item.setDailyRate(new BigDecimal(10.99));
+        item = itemDao.addItem(item);
+
+        item.setName("UPDATE");
+        item.setDescription("UPDATE");
+        itemDao.updateItem(item);
+        //Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item, itemDao.getItem(item.getId()));
     }
 
     @Test
     public void deleteItem() {
 
+        Item item = new Item();
+        item.setId(04);
+        item.setName("Movie1");
+        item.setDescription("DVD");
+        item.setDailyRate(new BigDecimal("33.22"));
+
+        item = itemDao.addItem(item);
+        Item item2 = itemDao.getItem(item.getId());
+        assertEquals(item, item2);
+        itemDao.deleteItem(item.getId());
+        assertNull(item2);
     }
 
-//    @Test
-//    public void addGetDeleteCustomer(){
-//
-//        Customer customer = new Customer();
-//        customer.setFirstName("John");
-//        customer.setLastName("Doe");
-//        customer.setEmail("wow@now.com");
-//        customer.setPhone("123-342-3433");
-//        customer.setCompany("GeorgiaTech");
-//
-//        customer = customerDao.addCustomer(customer);//adds customer to database
-//
-//        Customer customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
-//
-//        assertEquals(customer, customer2); //test that the created customer and the retrieved customer object are the same.
-//
-//        customerDao.deleteCustomer(customer.getId()); //delete customer object
-//
-//        assertNull(customer2);//test that customer2 is now null since customer was deleted.
-//
-//    }
-//}
-
     @Test
-    public void addGetUpdateDeleteItem(){
+    public void addGetUpdateDeleteItem() {
 
         Item item = new Item();
         item.setId(04);
@@ -125,12 +121,6 @@ public class ItemDaoTest {
         itemDao.deleteItem(item.getId());
         assertNull(item2);
 
-//        Item item = new Item();
-//        item.setDailyRate();  //big decimal data type format???? wth
-//        item.setDescription("Movie");
-//        item.setName("Bad Boys");
 
     }
-
-
 }
