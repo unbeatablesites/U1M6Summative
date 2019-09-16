@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/customer")
@@ -28,26 +29,43 @@ public class CustomerController {
     @ResponseStatus(HttpStatus.OK)
     public List<Customer> getAllCustomers() {
         List<Customer> customerList = serviceLayer.findAllCustomers();
-
+        if (customerList != null && customerList.size() == 0)
+            try {
+                throw new ClassNotFoundException("No customers yet. add one" );
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         return customerList;
     }
 
     @RequestMapping(value = "/{customerId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public Customer getCustomerById(@PathVariable("customerId") int customerId) {
+    public Customer getCustomerById(@PathVariable("customerId") int customerId) throws NegativeArraySizeException {
+        if(customerId < 0)
+            try{
+                throw new NegativeArraySizeException("No customers yet. add one" );
+            } catch (NegativeArraySizeException e){
+                e.printStackTrace();
+            }
         return serviceLayer.findCustomer(customerId);
     }
 
     @RequestMapping(value = "{customerId}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
-    public void updateCustomer(@PathVariable("customerId") int customerId, @RequestBody Customer customer) {
+    public void updateCustomer(@PathVariable("customerId") int customerId, @RequestBody Customer customer) throws NoSuchElementException {
+        if (customerId < 0) {
+            throw new NoSuchElementException("Please enter a whole number as a customer Id");
+        }
         customer.setId(customerId);
         serviceLayer.updateCustomer(customer);
     }
 
     @RequestMapping(value = "/{customerId}" , method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
-    public void deleteCustomer(@PathVariable("customerId") int customerId) {
+    public void deleteCustomer(@PathVariable("customerId") int customerId) throws NoSuchElementException {
+        if (customerId < 0) {
+            throw new NoSuchElementException("Please enter a whole number as a customer Id");
+        }
         serviceLayer.removeInvoice(customerId);
     }
 }
