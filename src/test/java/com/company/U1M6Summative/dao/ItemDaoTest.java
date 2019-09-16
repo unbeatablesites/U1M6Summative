@@ -1,5 +1,9 @@
 package com.company.U1M6Summative.dao;
+import com.company.U1M6Summative.dto.Customer;
+import com.company.U1M6Summative.dto.Invoice;
+import com.company.U1M6Summative.dto.InvoiceItem;
 import com.company.U1M6Summative.dto.Item;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +29,33 @@ import static org.junit.Assert.*;
 public class ItemDaoTest {
 
     @Autowired
+    CustomerDao customerDao;
+    @Autowired
+    InvoiceItemDao invoiceItemDao;
+    @Autowired
     ItemDao itemDao;
+    @Autowired
+    InvoiceDao invoiceDao;
+
+    @Before
+    public void setUp(){
+        List<InvoiceItem> listOfInvoiceItems = invoiceItemDao.getAllInvoiceItems();
+        for( InvoiceItem invoiceItem : listOfInvoiceItems ){
+            invoiceItemDao.deleteInvoiceItem(invoiceItem.getId());
+        }
+        List<Invoice> listOfInvoices = invoiceDao.getAllInvoices();
+        for(Invoice invoice : listOfInvoices){
+            invoiceDao.deleteInvoice(invoice.getId());
+        }
+        List<Item> listOfItems = itemDao.getAllItems();
+        for(Item item : listOfItems){
+            itemDao.deleteItem(item.getId());
+        }
+        List<Customer> listOfCustomers = customerDao.getAllCustomers();
+        for(Customer customer : listOfCustomers){
+            customerDao.deleteCustomer(customer.getId());
+        }
+    }
 
     @Test
     public void addItem() {
@@ -80,7 +110,7 @@ public class ItemDaoTest {
         Item item = new Item();
         item.setName("DVD");
         item.setDescription("Shuttle Launch");
-        item.setDailyRate(new BigDecimal(10.99));
+        item.setDailyRate(new BigDecimal("10.99"));
         item = itemDao.addItem(item);
 
         item.setName("UPDATE");
@@ -103,6 +133,7 @@ public class ItemDaoTest {
         Item item2 = itemDao.getItem(item.getId());
         assertEquals(item, item2);
         itemDao.deleteItem(item.getId());
+        item2 = itemDao.getItem(item2.getId());
         assertNull(item2);
     }
 
@@ -119,6 +150,7 @@ public class ItemDaoTest {
         Item item2 = itemDao.getItem(item.getId());
         assertEquals(item, item2);
         itemDao.deleteItem(item.getId());
+        item2 = itemDao.getItem(item.getId());
         assertNull(item2);
 
 
