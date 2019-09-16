@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -40,50 +41,102 @@ public class ServiceLayer {
     }
 
     public InvoiceViewModel findInvoice(int id){
-        return null;
+        Invoice invoice = invoiceDao.getInvoice(id);
+        return buildInvoiceViewModel(invoice);
     }
 
     public InvoiceViewModel buildInvoiceViewModel(Invoice invoice){
-        return null;
+        Customer customer = customerDao.getCustomer(invoice.getCustomerId());
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoice(invoice.getId());
+
+        InvoiceViewModel ivm = new InvoiceViewModel();
+        ivm.setId(invoice.getId());
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(invoice.getOrderDate());
+        ivm.setPickUpDate(invoice.getPickUpDate());
+        ivm.setReturnDate(invoice.getReturnDate());
+        ivm.setLateFee(invoice.getLateFee());
+        ivm.setInvoiceItems(invoiceItemList);
+
+        return ivm;
     }
 
     public List<InvoiceViewModel> findAllInvoices(){
-        return null;
+        List<Invoice> invoiceList = invoiceDao.getAllInvoices();
+        List<InvoiceViewModel> ivmList = new ArrayList<>();
+
+        for (Invoice invoice : invoiceList){
+            InvoiceViewModel ivm = buildInvoiceViewModel(invoice);
+            ivmList.add(ivm);
+        }
+        return ivmList;
     }
 
     public void updateInvoice(InvoiceViewModel invoiceViewModel){
+        Invoice invoice = new Invoice();
+        invoice.setId(invoice.getId());
+        invoice.setCustomerId(invoice.getCustomerId());
+        invoice.setOrderDate(invoice.getOrderDate());
+        invoice.setPickUpDate(invoice.getPickUpDate());
+        invoice.setReturnDate(invoice.getReturnDate());
+        invoice.setLateFee(invoice.getLateFee());
 
+        invoiceDao.updateInvoice(invoice);
+
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoice(invoice.getId());
+        invoiceItemList.stream()
+                .forEach(invoiceItem -> invoiceItemDao.deleteInvoiceItem(invoiceItem.getId()));
+
+        List<InvoiceItem> invoiceItems = invoiceViewModel.getInvoiceItems();
+        invoiceItems.stream()
+                .forEach(invoiceItem -> {
+                    invoiceItem.setInvoiceId(invoiceViewModel.getId());
+                    invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
+                });
     }
 
     public List<InvoiceViewModel> findInvoicesByCustomer(int id){
-        return null;
+        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomer(id);
+        List<InvoiceViewModel> ivmList = new ArrayList<>();
+
+        for (Invoice invoice : invoiceList){
+            InvoiceViewModel ivm = buildInvoiceViewModel(invoice);
+            ivmList.add(ivm);
+        }
+        return ivmList;
     }
 
     @Transactional
     public void removeInvoice(int id){
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoice(id);
 
+        invoiceItemList.stream()
+                .forEach(invoiceItem -> invoiceItemDao.deleteInvoiceItem(invoiceItem.getId()));
+
+        invoiceDao.deleteInvoice(id);
     }
 
     //=========================================================================
     //Customer Service Layer
     //=========================================================================
     public Customer saveCustomer(Customer customer){
-        return null;
+        return customerDao.addCustomer(customer);
     }
 
     public Customer findCustomer(int id){
-        return null;
+        return customerDao.getCustomer(id);
     }
 
     public List<Customer> findAllCustomers(){
-        return null;
+        return customerDao.getAllCustomers();
     }
 
     public void updateCustomer(Customer customer){
-
+        customerDao.updateCustomer(customer);
     }
 
     public void removeCustomer(int id){
+        customerDao.deleteCustomer(id);
     }
 
     //=========================================================================
@@ -91,23 +144,23 @@ public class ServiceLayer {
     //=========================================================================
 
     public InvoiceItem saveInvoiceItem(InvoiceItem invoiceItem){
-        return null;
+        return invoiceItemDao.addInvoiceItem(invoiceItem);
     }
 
     public InvoiceItem findInvoiceItem(int id){
-        return null;
+        return invoiceItemDao.getInvoiceItem(id);
     }
 
     public List<InvoiceItem> findAllInvoiceItems(){
-        return null;
+        return invoiceItemDao.getAllInvoiceItems();
     }
 
     public void updateInvoiceItem(InvoiceItem invoiceItem){
-
+        invoiceItemDao.updateInvoiceItem(invoiceItem);
     }
 
     public void removeInvoiceItem(int id){
-
+        invoiceItemDao.deleteInvoiceItem(id);
     }
 
     //=========================================================================
@@ -115,22 +168,22 @@ public class ServiceLayer {
     //=========================================================================
 
     public Item saveItem(Item item){
-        return null;
+        return itemDao.addItem(item);
     }
 
     public Item findItem(int id){
-        return null;
+        return itemDao.getItem(id);
     }
 
     public List<Item> findAllItems(){
-        return null;
+        return itemDao.getAllItems();
     }
 
     public void updateItem(Item item){
-
+        itemDao.updateItem(item);
     }
 
     public void removeItem(int id){
-
+        itemDao.deleteItem(id);
     }
 }
