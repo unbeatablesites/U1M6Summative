@@ -28,23 +28,23 @@ public class ItemViewModelController {
         return serviceLayer.findItem(itemId);
     }
 
-    @RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ResponseStatus(HttpStatus.OK)
     public void updateItem(@RequestBody @Valid Item item ,@PathVariable("id") int itemId){
         item.setId(itemId);
         serviceLayer.updateItem(item);
     }
 
-    @RequestMapping(value = "/all" , method = RequestMethod.GET)
+    @RequestMapping(value = "/" , method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
     public List<Item> getAllItems(){
         return serviceLayer.findAllItems();
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void deleteItem(@PathVariable("id") int itemId){
-        serviceLayer.removeInvoice(itemId);
+        serviceLayer.removeItem(itemId);
     }
 
 }
