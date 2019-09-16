@@ -102,7 +102,7 @@ public class ServiceLayerTest {
     }
 
     private void setupInvoiceItemDaoMock(){
-        invoiceDao = mock(InvoiceDaoJdbcTemplateImpl.class);
+        invoiceItemDao = mock(InvoiceItemDaoJdbcTemplateImpl.class);
         InvoiceItem invoiceItem = new InvoiceItem();
         invoiceItem.setId(1);
         invoiceItem.setInvoiceId(1);
@@ -251,12 +251,12 @@ public class ServiceLayerTest {
         ivm.setId(1);
 
         Customer customer = new Customer();
+        customer.setId(1);
         customer.setFirstName("John");
         customer.setLastName("Doe");
         customer.setEmail("johndoe@gmail.com");
         customer.setCompany("Cognizant");
         customer.setPhone("1112221234");
-        customer = serviceLayer.saveCustomer(customer);
 
         ivm.setCustomer(customer);
         ivm.setOrderDate(LocalDate.of(2019, 01, 01));
@@ -264,14 +264,24 @@ public class ServiceLayerTest {
         ivm.setReturnDate(LocalDate.of(2019, 01, 15));
         ivm.setLateFee(new BigDecimal("8.00"));
 
+        Item item = new Item();
+        item.setId(1);
+        item.setName("Hot Air Balloon");
+        item.setDailyRate(new BigDecimal("200.00"));
+        item.setDescription("Blue");
+
         InvoiceItem invoiceItem = new InvoiceItem();
+        invoiceItem.setId(1);
         invoiceItem.setInvoiceId(1);
+        invoiceItem.setItemId(1);
         invoiceItem.setQuantity(2);
         invoiceItem.setUnitRate(new BigDecimal("250.00"));
         invoiceItem.setDiscount(new BigDecimal("20.00"));
 
         List<InvoiceItem> invoiceItemList = new ArrayList<>();
         invoiceItemList.add(invoiceItem);
+
+        ivm.setInvoiceItems(invoiceItemList);
 
         ArgumentCaptor<Invoice> invoiceCaptor = ArgumentCaptor.forClass(Invoice.class);
 
@@ -524,9 +534,9 @@ public class ServiceLayerTest {
 
         ArgumentCaptor<Integer> idCaptor = ArgumentCaptor.forClass(Integer.class);
         doNothing().when(invoiceItemDao).deleteInvoiceItem(idCaptor.capture());
-        serviceLayer.removeInvoiceItem(invoiceItem.getId());
+        serviceLayer.removeInvoiceItem(1);
 
-        verify(invoiceDao, times(1)).deleteInvoice(idCaptor.getValue());
+        verify(invoiceItemDao, times(1)).deleteInvoiceItem(idCaptor.getValue());
 
         assertEquals(1, idCaptor.getValue().intValue());
     }

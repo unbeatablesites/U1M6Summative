@@ -37,7 +37,28 @@ public class ServiceLayer {
     //=========================================================================
     @Transactional
     public InvoiceViewModel saveInvoice(InvoiceViewModel invoiceViewModel){
-        return null;
+        Invoice invoice = new Invoice();
+        invoice.setCustomerId(invoiceViewModel.getCustomer().getId());
+        invoice.setOrderDate(invoiceViewModel.getOrderDate());
+        invoice.setPickUpDate(invoiceViewModel.getPickUpDate());
+        invoice.setReturnDate(invoiceViewModel.getReturnDate());
+        invoice.setLateFee(invoiceViewModel.getLateFee());
+        invoice = invoiceDao.addInvoice(invoice);
+
+        invoiceViewModel.setId(invoice.getId());
+
+        List<InvoiceItem> invoiceItemList = invoiceViewModel.getInvoiceItems();
+
+        invoiceItemList.stream()
+                .forEach(invoiceItem -> {
+                    invoiceItem.setInvoiceId(invoiceViewModel.getId());
+                    invoiceItemDao.addInvoiceItem(invoiceItem);
+                });
+
+        invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoice(invoiceViewModel.getId());
+        invoiceViewModel.setInvoiceItems(invoiceItemList);
+
+        return invoiceViewModel;
     }
 
     public InvoiceViewModel findInvoice(int id){
@@ -74,12 +95,12 @@ public class ServiceLayer {
 
     public void updateInvoice(InvoiceViewModel invoiceViewModel){
         Invoice invoice = new Invoice();
-        invoice.setId(invoice.getId());
-        invoice.setCustomerId(invoice.getCustomerId());
-        invoice.setOrderDate(invoice.getOrderDate());
-        invoice.setPickUpDate(invoice.getPickUpDate());
-        invoice.setReturnDate(invoice.getReturnDate());
-        invoice.setLateFee(invoice.getLateFee());
+        invoice.setId(invoiceViewModel.getId());
+        invoice.setCustomerId(invoiceViewModel.getCustomer().getId());
+        invoice.setOrderDate(invoiceViewModel.getOrderDate());
+        invoice.setPickUpDate(invoiceViewModel.getPickUpDate());
+        invoice.setReturnDate(invoiceViewModel.getReturnDate());
+        invoice.setLateFee(invoiceViewModel.getLateFee());
 
         invoiceDao.updateInvoice(invoice);
 
