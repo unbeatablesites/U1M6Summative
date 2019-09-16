@@ -48,6 +48,6 @@ public class CustomerController {
     @RequestMapping(value = "/{customerId}" , method = RequestMethod.DELETE)
     @ResponseStatus(HttpStatus.OK)
     public void deleteCustomer(@PathVariable("customerId") int customerId) {
-        serviceLayer.removeInvoice(customerId);
+        serviceLayer.removeCustomer(customerId);
     }
 }
