@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -46,26 +47,73 @@ public class ServiceLayer {
 
     public InvoiceViewModel buildInvoiceViewModel(Invoice invoice){
         Customer customer = customerDao.getCustomer(invoice.getCustomerId());
-        List<InvoiceItem> invoiceItemList = invoiceItemDao.getAllInvoiceItems();
-        return null;
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoice(invoice.getId());
+
+        InvoiceViewModel ivm = new InvoiceViewModel();
+        ivm.setId(invoice.getId());
+        ivm.setCustomer(customer);
+        ivm.setOrderDate(invoice.getOrderDate());
+        ivm.setPickUpDate(invoice.getPickUpDate());
+        ivm.setReturnDate(invoice.getReturnDate());
+        ivm.setLateFee(invoice.getLateFee());
+        ivm.setInvoiceItems(invoiceItemList);
+
+        return ivm;
     }
 
     public List<InvoiceViewModel> findAllInvoices(){
-        return null;
+        List<Invoice> invoiceList = invoiceDao.getAllInvoices();
+        List<InvoiceViewModel> ivmList = new ArrayList<>();
+
+        for (Invoice invoice : invoiceList){
+            InvoiceViewModel ivm = buildInvoiceViewModel(invoice);
+            ivmList.add(ivm);
+        }
+        return ivmList;
     }
 
     public void updateInvoice(InvoiceViewModel invoiceViewModel){
+        Invoice invoice = new Invoice();
+        invoice.setId(invoice.getId());
+        invoice.setCustomerId(invoice.getCustomerId());
+        invoice.setOrderDate(invoice.getOrderDate());
+        invoice.setPickUpDate(invoice.getPickUpDate());
+        invoice.setReturnDate(invoice.getReturnDate());
+        invoice.setLateFee(invoice.getLateFee());
 
+        invoiceDao.updateInvoice(invoice);
+
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoice(invoice.getId());
+        invoiceItemList.stream()
+                .forEach(invoiceItem -> invoiceItemDao.deleteInvoiceItem(invoiceItem.getId()));
+
+        List<InvoiceItem> invoiceItems = invoiceViewModel.getInvoiceItems();
+        invoiceItems.stream()
+                .forEach(invoiceItem -> {
+                    invoiceItem.setInvoiceId(invoiceViewModel.getId());
+                    invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
+                });
     }
 
     public List<InvoiceViewModel> findInvoicesByCustomer(int id){
-        List<Invoice> invoiceItemList = invoiceDao.getInvoiceByCustomer(id);
-        return null;
+        List<Invoice> invoiceList = invoiceDao.getInvoiceByCustomer(id);
+        List<InvoiceViewModel> ivmList = new ArrayList<>();
+
+        for (Invoice invoice : invoiceList){
+            InvoiceViewModel ivm = buildInvoiceViewModel(invoice);
+            ivmList.add(ivm);
+        }
+        return ivmList;
     }
 
     @Transactional
     public void removeInvoice(int id){
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getInvoiceItemsByInvoice(id);
 
+        invoiceItemList.stream()
+                .forEach(invoiceItem -> invoiceItemDao.deleteInvoiceItem(invoiceItem.getId()));
+
+        invoiceDao.deleteInvoice(id);
     }
 
     //=========================================================================
