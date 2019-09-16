@@ -3,6 +3,10 @@ package com.company.U1M6Summative.dao;
 
 import com.company.U1M6Summative.dto.Customer;
 //import com.company.U1M6Summative.dao*;
+import com.company.U1M6Summative.dto.Invoice;
+import com.company.U1M6Summative.dto.InvoiceItem;
+import com.company.U1M6Summative.dto.Item;
+import net.bytebuddy.asm.Advice;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,27 +28,34 @@ import java.util.List;
 public class CustomerDaoTest {
 
     @Autowired
+    private InvoiceItemDao invoiceItemDao;
+    @Autowired
+    private ItemDao itemDao;
+    @Autowired
     protected CustomerDao customerDao;
+    @Autowired
+    private InvoiceDao invoiceDao;
 
-    @Test
-    public void addCustomer() {
 
-        Customer customer = new Customer();
-        customer.setFirstName("Bart");
-        customer.setLastName("Simpson");
-        customer.setEmail("all@redbox1.com");
-        customer.setPhone("444-555-3233");
-        customer.setCompany("Hawaii");
-
-        customer = customerDao.addCustomer(customer);//adds customer to database
-
-        Customer customer2 = customerDao.getCustomer(customer.getId());//get customer from DB and set customer2 equal to it.
-
-        assertEquals(customer, customer2); //test that the created customer and the retrieved customer object are the same.
-
-    }
     @Before
     public void setUp(){
+        List<InvoiceItem> invoiceItemList = invoiceItemDao.getAllInvoiceItems();
+        for(InvoiceItem invoiceItem : invoiceItemList){
+            invoiceItemDao.deleteInvoiceItem(invoiceItem.getId());
+        }
+        List<Item> listOfItems = itemDao.getAllItems();
+        for(Item item : listOfItems){
+            itemDao.deleteItem(item.getId());
+        }
+        List<Invoice> listOfInvoices = invoiceDao.getAllInvoices();
+        for(Invoice invoice : listOfInvoices){
+            invoiceDao.deleteInvoice(invoice.getId());
+        }
+
+        List<Customer> listOfCustomers = customerDao.getAllCustomers();
+        for(Customer customer : listOfCustomers){
+            customerDao.deleteCustomer(customer.getId());
+        }
 
     }
 

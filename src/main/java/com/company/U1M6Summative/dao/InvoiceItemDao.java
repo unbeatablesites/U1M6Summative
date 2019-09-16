@@ -10,4 +10,5 @@ public interface InvoiceItemDao {
     List<InvoiceItem> getAllInvoiceItems();
     void updateInvoiceItem(InvoiceItem invoiceItem);
     void deleteInvoiceItem(int id);
+    List<InvoiceItem> getInvoiceItemsByInvoice(int id);
 }

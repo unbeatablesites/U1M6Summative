@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,6 +38,14 @@ public class InvoiceItemDaoTest {
 
     @Before
     public void setUp(){
+        List<InvoiceItem> listOfInvoiceItems = invoiceItemDao.getAllInvoiceItems();
+        for( InvoiceItem invoiceItem : listOfInvoiceItems ){
+            invoiceItemDao.deleteInvoiceItem(invoiceItem.getId());
+        }
+        List<Invoice> listOfInvoices = invoiceDao.getAllInvoices();
+        for(Invoice invoice : listOfInvoices){
+            invoiceDao.deleteInvoice(invoice.getId());
+        }
         List<Item> listOfItems = itemDao.getAllItems();
         for(Item item : listOfItems){
             itemDao.deleteItem(item.getId());
@@ -45,19 +54,12 @@ public class InvoiceItemDaoTest {
         for(Customer customer : listOfCustomers){
             customerDao.deleteCustomer(customer.getId());
         }
-        List<Invoice> listOfInvoices = invoiceDao.getAllInvoices();
-        for(Invoice invoice : listOfInvoices){
-            invoiceDao.deleteInvoice(invoice.getId());
-        }
-        List<InvoiceItem> listOfInvoiceItems = invoiceItemDao.getAllInvoiceItems();
-        for( InvoiceItem invoiceItem : listOfInvoiceItems ){
-            invoiceItemDao.deleteInvoiceItem(invoiceItem.getId());
-        }
 
         item = new Item();
         item.setName("Item 1");
         item.setDescription("This is an item");
         item.setDailyRate(new BigDecimal("3.95"));
+        itemDao.addItem(item);
 
         customer = new Customer();
         customer.setFirstName("Guy");
@@ -65,27 +67,29 @@ public class InvoiceItemDaoTest {
         customer.setCompany("Company");
         customer.setPhone("111-111-1111");
         customer.setEmail("guy@company.com");
+        customerDao.addCustomer(customer);
 
         invoice = new Invoice();
         invoice.setCustomerId(customer.getId());
         invoice.setOrderDate(LocalDate.of(2019,05,24));
         invoice.setPickUpDate(LocalDate.of(2019, 05, 25));
         invoice.setReturnDate(LocalDate.of(2019, 05, 28));
-        invoice.setLateFee(new BigDecimal("0"));
+        invoice.setLateFee(new BigDecimal("0").setScale(2, RoundingMode.CEILING));
+        invoiceDao.addInvoice(invoice);
 
         invoiceItem = new InvoiceItem();
         invoiceItem.setItemId(item.getId());
         invoiceItem.setInvoiceId(invoice.getId());
         invoiceItem.setQuantity(1);
         invoiceItem.setUnitRate(item.getDailyRate());
-        invoiceItem.setDiscount(new BigDecimal("0"));
+        invoiceItem.setDiscount(new BigDecimal("0").setScale(2, RoundingMode.CEILING));
 
         invoiceItem1 = new InvoiceItem();
         invoiceItem1.setItemId(item.getId());
         invoiceItem1.setInvoiceId(invoice.getId());
         invoiceItem1.setQuantity(13);
         invoiceItem1.setUnitRate(item.getDailyRate());
-        invoiceItem1.setDiscount(new BigDecimal(".1"));
+        invoiceItem1.setDiscount(new BigDecimal(".1").setScale(2, RoundingMode.CEILING));
     }
 
     @Test
@@ -126,5 +130,16 @@ public class InvoiceItemDaoTest {
         invoiceItemDao.deleteInvoiceItem(invoiceItem.getId());
         invoiceItem = invoiceItemDao.getInvoiceItem(invoiceItem.getId());
         assertNull(invoiceItem);
+    }
+    @Test
+    public void getAllInvoiceItemsByInvoice(){
+//        customer = customerDao.addCustomer(customer);
+//        item = itemDao.addItem(item);
+        invoiceItem = invoiceItemDao.addInvoiceItem(invoiceItem);
+        List<InvoiceItem> listOfInvoiceItems = invoiceItemDao.getInvoiceItemsByInvoice(invoice.getId());
+
+        assertEquals(1, listOfInvoiceItems.size());
+
+
     }
 }
